@@ -9,21 +9,21 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        // ªì©l³]©w¡G¤HÃþ¼Ò¦¡
+        // ï¿½ï¿½lï¿½]ï¿½wï¿½Gï¿½Hï¿½ï¿½ï¿½Ò¦ï¿½
         UpdatePhysics();
     }
 
     void Update()
     {
-        // 2D ²¾°Ê¿é¤J (¥ª¥k: A/D, ¤W¤U: W/S)
+        // 2D ï¿½ï¿½ï¿½Ê¿ï¿½J (ï¿½ï¿½ï¿½k: A/D, ï¿½Wï¿½U: W/S)
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
         Vector2 movement = new Vector2(moveX, moveY).normalized;
 
-        // ³]©w³t«× (Unity 6 «ØÄ³¨Ï¥Î linearVelocity)
+        // ï¿½]ï¿½wï¿½tï¿½ï¿½ (Unity 6 ï¿½ï¿½Ä³ï¿½Ï¥ï¿½ linearVelocity)
         rb.linearVelocity = movement * moveSpeed;
 
-        // «öªÅ¥ÕÁä¤Á´««ÕÆF¼Ò¦¡
+        // ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Fï¿½Ò¦ï¿½
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isGhostMode = !isGhostMode;
@@ -36,11 +36,11 @@ public class PlayerController : MonoBehaviour
         int playerLayer = LayerMask.NameToLayer("Player");
         int humanLayer = LayerMask.NameToLayer("HumanWorld");
 
-        // 2D ¬ïÀð®Ö¤ßÅÞ¿è
-        // ·í isGhostMode ¬° true ®É¡A©¿²¤ Player »P HumanWorld ªº¸I¼²
+        // 2D ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½Þ¿ï¿½
+        // ï¿½ï¿½ isGhostMode ï¿½ï¿½ true ï¿½É¡Aï¿½ï¿½ï¿½ï¿½ Player ï¿½P HumanWorld ï¿½ï¿½ï¿½Iï¿½ï¿½
         Physics2D.IgnoreLayerCollision(playerLayer, humanLayer, isGhostMode);
 
-        // µøÄ±¦^õX¡G«ÕÆF¼Ò¦¡ÅÜ¥b³z©úÂÅ¦â
+        // ï¿½ï¿½Ä±ï¿½^ï¿½Xï¿½Gï¿½ï¿½ï¿½Fï¿½Ò¦ï¿½ï¿½Ü¥bï¿½zï¿½ï¿½ï¿½Å¦ï¿½
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         sr.color = isGhostMode ? new Color(0, 1, 1, 0.5f) : Color.white;
     }
