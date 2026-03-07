@@ -2,65 +2,54 @@ using UnityEngine;
 
 public class mainchar : MonoBehaviour
 {
-    [Header("移動設定")]
+    [Header("移動與跳躍設定")]
     public float moveSpeed = 5f;
-    public float runMultiplier = 1.5f;
-    public int world = 0 ;//0:現實，1:靈界
+    public float jumpForce = 6f; // 跳躍的力量
 
     [Header("同步目標")]
-    public Transform playerReality;   // 現實層的方塊
-    public Transform playerSpirit;    // 靈界層的方塊
+    public Rigidbody2D rbReality;   // 現實層的剛體
+    public Rigidbody2D rbSpirit;    // 靈界層的剛體
 
-    private Vector2 moveInput;//座標
-    private bool isRunning;
-
-    public void changeworld()
-    {
-        if(world == 0)
-        {
-            world = 1;
-        }
-        else
-        {
-            world = 0;
-        }
-    }
+    private float moveInputX;
 
     void Update()
     {
-        // 讀取輸入
-        moveInput.x = Input.GetAxisRaw("Horizontal");  // A/D
-        moveInput.y = Input.GetAxisRaw("Vertical");    // W/S
-        isRunning = Input.GetKey(KeyCode.LeftShift);
+        // 1. 左右移動輸入 (A/D 或 方向鍵)
+        moveInputX = Input.GetAxisRaw("Horizontal");
 
-        // 正規化對角線移動
-        if (moveInput.magnitude > 1f)
-        {
-            moveInput.Normalize();
-        }
-
+        // 2. 偵測跳躍按鍵 (按下空白鍵)
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            changeworld();
+            PerformJump();
         }
+    }
 
-        // 計算移動
-        float currentSpeed = isRunning ? moveSpeed * runMultiplier : moveSpeed;
-        Vector3 move = new Vector3(moveInput.x, moveInput.y, 0) * currentSpeed * Time.deltaTime;
-        Vector3 sp_move = new Vector3(moveInput.x, moveInput.y, 0) * currentSpeed * Time.deltaTime;
-        Vector3 move_sprit = new Vector3(moveInput.x , -moveInput.y, 0)* currentSpeed * Time.deltaTime;
+    void FixedUpdate()
+    {
+        // 3. 處理左右移動 (使用物理速度)
+        ApplyHorizontalMovement(rbReality);
+        ApplyHorizontalMovement(rbSpirit);
+    }
 
-
-        // 同步移動兩個方塊
-        if (world == 0)
+    void PerformJump()
+    {
+        // 現實層：往上跳 (+Y)
+        if (rbReality != null)
         {
-            playerReality.position += move;
-            playerSpirit.position += move_sprit;
+            rbReality.linearVelocity = new Vector2(rbReality.linearVelocity.x, jumpForce);
         }
 
-        if (world == 1)
+        // 靈界層：往下跳 (-Y)
+        if (rbSpirit != null)
         {
-            playerSpirit.position += move_sprit;
+            rbSpirit.linearVelocity = new Vector2(rbSpirit.linearVelocity.x, -jumpForce);
         }
+    }
+
+    void ApplyHorizontalMovement(Rigidbody2D rb)
+    {
+        if (rb == null) return;
+        // 保持原本的 Y 軸速度，只改變 X 軸速度
+        rb.linearVelocity = new Vector2(moveInputX * moveSpeed, rb.linearVelocity.y);
     }
 }

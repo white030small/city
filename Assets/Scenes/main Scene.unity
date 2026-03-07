@@ -222,10 +222,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  runMultiplier: 1.5
-  world: 0
-  playerReality: {fileID: 38416454}
-  playerSpirit: {fileID: 1336527994}
+  jumpForce: 6
+  rbReality: {fileID: 38416457}
+  rbSpirit: {fileID: 1336527995}
 --- !u!61 &38416456
 BoxCollider2D:
   m_ObjectHideFlags: 0
