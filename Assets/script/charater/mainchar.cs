@@ -5,6 +5,7 @@ public class mainchar : MonoBehaviour
     [Header("移動設定")]
     public float moveSpeed = 5f;
     public float runMultiplier = 1.5f;
+    public int world = 0 ;//0:現實，1:靈界
 
     [Header("同步目標")]
     public Transform playerReality;   // 現實層的方塊
@@ -12,6 +13,18 @@ public class mainchar : MonoBehaviour
 
     private Vector2 moveInput;//座標
     private bool isRunning;
+
+    public void changeworld()
+    {
+        if(world == 0)
+        {
+            world = 1;
+        }
+        else
+        {
+            world = 0;
+        }
+    }
 
     void Update()
     {
@@ -26,18 +39,26 @@ public class mainchar : MonoBehaviour
             moveInput.Normalize();
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            changeworld();
+        }
+
         // 計算移動
         float currentSpeed = isRunning ? moveSpeed * runMultiplier : moveSpeed;
         Vector3 move = new Vector3(moveInput.x, moveInput.y, 0) * currentSpeed * Time.deltaTime;
+        Vector3 sp_move = new Vector3(moveInput.x, moveInput.y, 0) * currentSpeed * Time.deltaTime;
         Vector3 move_sprit = new Vector3(moveInput.x , -moveInput.y, 0)* currentSpeed * Time.deltaTime;
 
+
         // 同步移動兩個方塊
-        if (playerReality != null)
+        if (world == 0)
         {
             playerReality.position += move;
+            playerSpirit.position += move_sprit;
         }
 
-        if (playerSpirit != null)
+        if (world == 1)
         {
             playerSpirit.position += move_sprit;
         }

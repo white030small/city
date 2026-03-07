@@ -223,6 +223,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   runMultiplier: 1.5
+  rbReality: {fileID: 38416457}
+  rbSpirit: {fileID: 1336527995}
   playerReality: {fileID: 38416454}
   playerSpirit: {fileID: 1336527994}
 --- !u!61 &38416456
