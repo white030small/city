@@ -29,18 +29,10 @@ public class mainchar : MonoBehaviour
         moveInputX = Input.GetAxisRaw("Horizontal");
         isRunning = Input.GetKey(KeyCode.LeftShift);
 
-        // 地面偵測
-        isGrounded = Physics2D.OverlapCircle(
-            groundCheck.position, 
-            groundCheckRadius, 
-            groundLayer
-        );
+        // 地面偵測(待更改)
 
         // 落地時重置跳躍次數
-        if (isGrounded)
-        {
-            jumpCount = 0;
-        }
+
 
         // 2. 偵測跳躍按鍵 (按下空白鍵)
         if (Input.GetKeyDown(KeyCode.Space))
