@@ -23,8 +23,10 @@ public class mainchar : MonoBehaviour
     [Header("分界線")]
     public float dividerY = 0f;  // 白線的 Y 座標
 
+
     void Update()
     {
+        Debug.Log(jumpCount);
         // 1. 左右移動輸入 (A/D 或 方向鍵)
         moveInputX = Input.GetAxisRaw("Horizontal");
         isRunning = Input.GetKey(KeyCode.LeftShift);
@@ -58,7 +60,20 @@ public class mainchar : MonoBehaviour
         }
         
     }
-    
+
+    void OnCollisionEnter2D(Collision2D collision)//碰地板就回歸
+    {
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            jumpCount = 0;
+        }
+    }
+
+    public void GetSpritJump(int num)
+    {
+        jumpCount = num ;
+    }
+
     void changeworld()
     {
         if(world == 0)

@@ -227,6 +227,9 @@ MonoBehaviour:
   rbReality: {fileID: 38416457}
   rbSpirit: {fileID: 1336527995}
   world: 0
+  maxjump: 1
+  jumpCount: 0
+  dividerY: 0
 --- !u!61 &38416456
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -467,7 +470,7 @@ GameObject:
   - component: {fileID: 644368595}
   m_Layer: 0
   m_Name: Ground_Reality
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -788,6 +791,7 @@ GameObject:
   - component: {fileID: 1336527994}
   - component: {fileID: 1336527993}
   - component: {fileID: 1336527996}
+  - component: {fileID: 1336527997}
   - component: {fileID: 1336527995}
   m_Layer: 0
   m_Name: second char
@@ -939,6 +943,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1336527997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336527992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330fc20377d65b34080bb54e01e7b1fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainchar: {fileID: 38416455}
 --- !u!1 &1757394702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,7 +1047,7 @@ GameObject:
   - component: {fileID: 2019267332}
   m_Layer: 0
   m_Name: Ground_Spirit
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
