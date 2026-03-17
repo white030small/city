@@ -48,7 +48,7 @@
               "RelativeDocumentMoniker": "Assets\\script\\Object\\InteractableGrab.cs",
               "ToolTip": "C:\\Users\\USER\\Documents\\GitHub\\city\\Assets\\script\\Object\\InteractableGrab.cs",
               "RelativeToolTip": "Assets\\script\\Object\\InteractableGrab.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAUwGwAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAQwFkAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-09T14:01:45.717Z",
               "EditorCaption": ""
@@ -61,7 +61,7 @@
               "RelativeDocumentMoniker": "Assets\\script\\charater\\mainchar.cs",
               "ToolTip": "C:\\Users\\USER\\Documents\\GitHub\\city\\Assets\\script\\charater\\mainchar.cs",
               "RelativeToolTip": "Assets\\script\\charater\\mainchar.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAcwI0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAQwKwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-07T10:39:44.484Z",
               "EditorCaption": ""
@@ -76,8 +76,7 @@
               "RelativeToolTip": "Assets\\script\\Object\\InteractableObject.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T11:38:55.042Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T11:38:55.042Z"
             },
             {
               "$type": "Document",
