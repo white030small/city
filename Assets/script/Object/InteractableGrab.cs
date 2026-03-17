@@ -48,7 +48,8 @@ public class InteractableGrab : MonoBehaviour
     {
         isBeingDragged = true;
         transform.SetParent(playerTransform);
-
+        // 告訴主角：你開始搬東西了
+        if (playerScript != null) playerScript.isDraggingObject = true;
         // 抓取時改為 Kinematic 避免物理抖動
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.linearVelocity = Vector2.zero;
@@ -64,7 +65,8 @@ public class InteractableGrab : MonoBehaviour
     void StopDragging()
     {
         isBeingDragged = false;
-
+        // 告訴主角：你放手了
+        if (playerScript != null) playerScript.isDraggingObject = false;
         // 恢復碰撞偵測
         if (playerTransform != null)
         {

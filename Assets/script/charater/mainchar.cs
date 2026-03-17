@@ -26,6 +26,9 @@ public class mainchar : MonoBehaviour
     [Header("地面狀態")]
     public bool isGrounded;
 
+    [Header("拖移狀態")]
+    public bool isDraggingObject = false;
+
     void Update()
     {
         Debug.Log(jumpCount);
@@ -123,7 +126,7 @@ public class mainchar : MonoBehaviour
 
     void PerformJump()
     {
-        if(jumpCount >= maxjump)return;
+        if(jumpCount >= maxjump || isDraggingObject ) return;
 
         jumpCount++;
 
@@ -140,7 +143,7 @@ public class mainchar : MonoBehaviour
         }
     }
 
-    void ApplyHorizontalMovement(Rigidbody2D rb)
+    /*void ApplyHorizontalMovement(Rigidbody2D rb)
     {
         if (rb != null && isRunning == true)
         {
@@ -152,5 +155,19 @@ public class mainchar : MonoBehaviour
             rb.linearVelocity = new Vector2(moveInputX * moveSpeed , rb.linearVelocity.y);
         }
     }
+    */
+    void ApplyHorizontalMovement(Rigidbody2D rb)
+    {
+        if (rb == null) return;
 
+        float currentSpeed = isRunning ? moveSpeed * runMultiplier : moveSpeed;
+
+        // 【新增】如果正在搬東西，速度減半 (可以自己調整 0.5f 這個數值)
+        if (isDraggingObject)
+        {
+            currentSpeed *= 0.5f;
+        }
+
+        rb.linearVelocity = new Vector2(moveInputX * currentSpeed, rb.linearVelocity.y);
+    }
 }
