@@ -7,26 +7,40 @@ public class InteractableGrab : MonoBehaviour
     private Transform playerTransform;
     private Rigidbody2D rb;
     private Collider2D objCollider; // 物件本身的碰撞器
+    private mainchar playerScript; // 儲存主角腳本的參考
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         objCollider = GetComponent<Collider2D>();
 
-        // 【修正 Bug 1】初始化就鎖死 X 軸與旋轉，確保平常推不動，但能受重力掉落
+        // 初始化就鎖死 X 軸與旋轉，確保平常推不動，但能受重力掉落
         rb.bodyType = RigidbodyType2D.Dynamic;
         LockPosition(true);
     }
 
     void Update()
     {
-        // 只有按 E 才會切換狀態，絕對不會自動跟隨
+        if (isBeingDragged && playerScript != null && !playerScript.isGrounded)
+        {
+            StopDragging();
+        }
+
+        // 只有按 E 才會切換狀態
         if (isPlayerNearby && Input.GetKeyDown(KeyCode.E))
         {
             if (!isBeingDragged)
-                StartDragging();
+            {
+                // 【關鍵檢查】只有主角在地上時，才能開始搬運
+                if (playerScript != null && playerScript.isGrounded)
+                {
+                    StartDragging();
+                }
+            }
             else
+            {
                 StopDragging();
+            }
         }
     }
 
@@ -39,7 +53,7 @@ public class InteractableGrab : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.linearVelocity = Vector2.zero;
 
-        // 【修正 Bug 2】抓取時暫時忽略與玩家的碰撞，防止跳躍時互相推擠
+        // 抓取時暫時忽略與玩家的碰撞，防止跳躍時互相推擠
         Collider2D playerCollider = playerTransform.GetComponent<Collider2D>();
         if (playerCollider != null)
         {
@@ -52,10 +66,13 @@ public class InteractableGrab : MonoBehaviour
         isBeingDragged = false;
 
         // 恢復碰撞偵測
-        Collider2D playerCollider = playerTransform.GetComponent<Collider2D>();
-        if (playerCollider != null)
+        if (playerTransform != null)
         {
-            Physics2D.IgnoreCollision(objCollider, playerCollider, false);
+            Collider2D playerCollider = playerTransform.GetComponent<Collider2D>();
+            if (playerCollider != null)
+            {
+                Physics2D.IgnoreCollision(objCollider, playerCollider, false);
+            }
         }
 
         transform.SetParent(null);
@@ -82,6 +99,7 @@ public class InteractableGrab : MonoBehaviour
         {
             isPlayerNearby = true;
             playerTransform = other.transform; // 僅記錄位置，不執行 SetParent
+            playerScript = other.GetComponent<mainchar>();
         }
     }
 
@@ -90,7 +108,11 @@ public class InteractableGrab : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = false;
-            if (!isBeingDragged) playerTransform = null;
+            if(!isBeingDragged)
+            {
+                playerTransform = null;
+                playerScript = null;
+            }
         }
     }
 }

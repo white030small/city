@@ -23,6 +23,8 @@ public class mainchar : MonoBehaviour
     [Header("分界線")]
     public float dividerY = 0f;  // 白線的 Y 座標
 
+    [Header("地面狀態")]
+    public bool isGrounded;
 
     void Update()
     {
@@ -66,9 +68,26 @@ public class mainchar : MonoBehaviour
         if(collision.gameObject.CompareTag("Ground"))
         {
             jumpCount = 0;
+            isGrounded = true;
+        }
+    }
+    //在地上
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
         }
     }
 
+    // 空中
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false; // 進入「在空中」狀態
+        }
+    }
     public void GetSpritJump(int num)
     {
         jumpCount = num ;
@@ -133,4 +152,5 @@ public class mainchar : MonoBehaviour
             rb.linearVelocity = new Vector2(moveInputX * moveSpeed , rb.linearVelocity.y);
         }
     }
+
 }
