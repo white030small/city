@@ -10,13 +10,14 @@ public class camermover : MonoBehaviour
     public float smoothSpeed = 5f;
     public Vector3 offset = new Vector3(0, 0, -10);
 
-    // 當前跟隨的目標
     private Transform currentTarget;
+    //private bool isJumping = false;
+    private float lockedY; // 跳躍時鎖住的 Y 座標
 
     void Start()
     {
-        // 預設跟隨現實
         currentTarget = targetReality;
+        lockedY = transform.position.y;
     }
 
     void LateUpdate()
@@ -24,12 +25,39 @@ public class camermover : MonoBehaviour
         if (currentTarget == null) return;
 
         Vector3 targetPosition = currentTarget.position + offset;
-        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
+
+        //if (isJumping)
+        //{
+            // X 跟隨，Y 鎖住不動
+            targetPosition.y = lockedY;
+        //}
+
+        transform.position = Vector3.Lerp(transform.position,targetPosition,smoothSpeed * Time.deltaTime);
     }
 
-    // 切換跟隨目標
     public void SwitchTarget(bool toSpirit)
     {
-        currentTarget = toSpirit ? targetSpirit : targetReality;
+        if (toSpirit)
+        {
+            currentTarget = targetSpirit;
+        }
+        else
+        {
+            currentTarget = targetReality;
+        }
+
+        // 切換世界時，更新鎖定的 Y 並解除跳躍狀態
+        //isJumping = false;
+        //lockedY = currentTarget.position.y + offset.y;
     }
+
+    /*public void IsJump(bool jumping)
+    {
+        isJumping = jumping;
+        if (!jumping)
+        {
+            // 落地時更新鎖定的 Y
+            lockedY = currentTarget.position.y + offset.y;
+        }
+    }*/
 }

@@ -29,9 +29,11 @@ public class mainchar : MonoBehaviour
     [Header("拖移狀態")]
     public bool isDraggingObject = false;
 
+    [Header("攝像機")]
+    public camermover camermover;
+
     void Update()
     {
-        Debug.Log(jumpCount);
         // 1. 左右移動輸入 (A/D 或 方向鍵)
         moveInputX = Input.GetAxisRaw("Horizontal");
         isRunning = Input.GetKey(KeyCode.LeftShift);
@@ -74,6 +76,7 @@ public class mainchar : MonoBehaviour
             isGrounded = true;
         }
     }
+    
     //在地上
     void OnCollisionStay2D(Collision2D collision)
     {
@@ -91,9 +94,10 @@ public class mainchar : MonoBehaviour
             isGrounded = false; // 進入「在空中」狀態
         }
     }
+
     public void GetSpritJump(int num)
     {
-        jumpCount = num ;
+        jumpCount = num ;//連接sprit.cs
     }
 
     void changeworld()
@@ -101,12 +105,15 @@ public class mainchar : MonoBehaviour
         if(world == 0)
         {
             world = 1 ;
+            camermover.SwitchTarget(true);//連接攝像機
         }
         else
         {
             world = 0 ;
+            camermover.SwitchTarget(false);//連接攝像機
         }
     }
+
 
     /*void FixedUpdate()
     {
