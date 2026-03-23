@@ -441,8 +441,7 @@ Transform:
   m_LocalPosition: {x: -2.11, y: 0.17, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 390828778}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &66663870
@@ -636,7 +635,7 @@ RectTransform:
   m_Children:
   - {fileID: 1586098967}
   - {fileID: 675058783}
-  m_Father: {fileID: 66663869}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -811,8 +810,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 20.305481, y: -299.2}
-  m_SizeDelta: {x: 1960.6108, y: 481.61}
+  m_AnchoredPosition: {x: 0.000061035, y: -278.48}
+  m_SizeDelta: {x: 1920, y: 523.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &675058784
 MonoBehaviour:
@@ -827,7 +826,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -917,7 +916,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 6863246505373101655, guid: 6d44b351106719341b307e9958627ccf, type: 3}
-  m_Color: {r: 0.5058824, g: 0.90196085, b: 0.85098046, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1062,8 +1061,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1920, y: -113.62225}
-  m_SizeDelta: {x: 2880, y: 1190.4564}
+  m_AnchoredPosition: {x: 1920, y: -92.91467}
+  m_SizeDelta: {x: 2880, y: 1231.9106}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1586098968
 MonoBehaviour:
@@ -1078,7 +1077,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7058824, g: 0.5882353, b: 0.19607843, a: 0.3019608}
+  m_Color: {r: 0.97647065, g: 0.8941177, b: 0.5372549, a: 0.23529412}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1381,6 +1380,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2019821777186835757, guid: 7e2ebcb610e3ae040ba369139f68e514, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019821777186835757, guid: 7e2ebcb610e3ae040ba369139f68e514, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019821777186835757, guid: 7e2ebcb610e3ae040ba369139f68e514, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019821777186835757, guid: 7e2ebcb610e3ae040ba369139f68e514, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4911834312065752886, guid: 7e2ebcb610e3ae040ba369139f68e514, type: 3}
       propertyPath: m_Name
       value: second char
@@ -1449,3 +1464,4 @@ SceneRoots:
   - {fileID: 2019267331}
   - {fileID: 2225736355429126223}
   - {fileID: 122852582}
+  - {fileID: 390828778}
