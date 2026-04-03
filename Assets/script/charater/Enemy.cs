@@ -3,8 +3,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Header("敵人設定")]
-    public int health = 3;
-    public GameObject animalPrefab;
+    public int health = 3;//血量上限
+    public GameObject animalPrefab;//死掉的動物(還需要修)
 
     [Header("偵測設定")]
     public float detectRange = 1f;    // 多遠看到玩家
@@ -14,10 +14,10 @@ public class Enemy : MonoBehaviour
     public float idleMoveRange = 0.5f;  // 晃動幅度
     public float idleMoveSpeed = 0.3f;  // 晃動速度
 
-    private Animator animator;
-    private Rigidbody2D rb;
+    private Animator animator;//敵人動畫
+    private Rigidbody2D rb;//敵人的碰撞箱
     private SpriteRenderer spriteRenderer;
-    private Transform player;
+    private Transform player;//主角的位置
     private bool isDead = false;
     private float idleOriginX;
     private int idleDirection = 1;
@@ -28,39 +28,39 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");//找到是玩家tag的角色
         if (playerObj != null)
-            player = playerObj.transform;
+            player = playerObj.transform;//找到角色的位置
 
         idleOriginX = transform.position.x;
     }
 
     void Update()
     {
-        if (isDead) return;
+        if (isDead) return;//死亡就停
 
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);//敵人跟主角的距離
 
-        if (distanceToPlayer <= detectRange)
+        if (distanceToPlayer <= detectRange)//小於設定值就追擊
         {
-            Chase();
+            Chase();//追擊
         }
         else
         {
-            IdleMove();
+            IdleMove();//待機
         }
     }
 
     void Chase()
     {
-        float direction = Mathf.Sign(player.position.x - transform.position.x);
-        rb.linearVelocity = new Vector2(direction * chaseSpeed, rb.linearVelocity.y);
+        float direction = Mathf.Sign(player.position.x - transform.position.x);//篹出左右(左:-1，右:1)
+        rb.linearVelocity = new Vector2(direction * chaseSpeed, rb.linearVelocity.y);//往角色方向追擊
 
         // 面朝玩家
         spriteRenderer.flipX = direction < 0;
     }
 
-    void IdleMove()
+    void IdleMove()//(可能後續切成動畫)
     {
         float targetX = idleOriginX + (idleDirection * idleMoveRange);
         float direction = Mathf.Sign(targetX - transform.position.x);
@@ -72,8 +72,8 @@ public class Enemy : MonoBehaviour
             idleDirection *= -1;
         }
     }
-
-    public void TakeDamage(int damage)
+    
+    public void TakeDamage(int damage)//傷害計算
     {
         if (isDead) return;
 
@@ -88,19 +88,19 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         isDead = true;
-        rb.linearVelocity = Vector2.zero;
-        rb.bodyType = RigidbodyType2D.Kinematic;
-        animator.SetTrigger("Die");
-        GetComponent<Collider2D>().enabled = false;
-        SpawnAnimal();
+        rb.linearVelocity = Vector2.zero;//停止移動
+        rb.bodyType = RigidbodyType2D.Kinematic;//把角色的重力停止
+        animator.SetTrigger("Die");//切到死亡動畫
+        GetComponent<Collider2D>().enabled = false;//碰撞箱關閉
+        //SpawnAnimal();
     }
 
-    public void SpawnAnimal()
+    /*public void SpawnAnimal()
     {
         if (animalPrefab != null)
         {
             Instantiate(animalPrefab, transform.position, Quaternion.identity);
         }
         Destroy(gameObject);
-    }
+    }*/
 }

@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
     public Transform attackPoint;       // 攻擊判定的中心點
     public LayerMask enemyLayer;        // 敵人的 Layer
 
-    private float cooldownTimer = 0f;
+    private float cooldownTimer = 0f; //冷卻
     private bool facingRight = true;
 
     void Update()
@@ -28,7 +28,7 @@ public class PlayerAttack : MonoBehaviour
         // 按下攻擊鍵
         if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0)
         {
-            Attack();
+            Attack();//連接到敵人
             cooldownTimer = attackCooldown;
             Debug.Log("攻擊");
         }
