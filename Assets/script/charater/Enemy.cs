@@ -21,6 +21,12 @@ public class Enemy : MonoBehaviour
     private bool isDead = false;
     private float idleOriginX;
     private int idleDirection = 1;
+    private bool isAttacking = false;
+
+    [Header("攻擊")]
+    public float Attackrange = 1f;
+    public blood blood;
+
 
     void Start()
     {
@@ -37,23 +43,24 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (isDead) return;//死亡就停
+        if (isDead || isAttacking) return;//死亡或攻擊中就停
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);//敵人跟主角的距離
+        //Debug.Log("距離: " + distanceToPlayer);
 
-        if (distanceToPlayer <= detectRange)//小於設定值就追擊
+        if (distanceToPlayer <= Attackrange)
+        {
+            Attack();//攻擊（最近才打）
+        }
+        else if (distanceToPlayer <= detectRange)//小於設定值就追擊
         {
             Chase();//追擊
-        }
-        else
-        {
-            IdleMove();//待機
         }
     }
 
     void Chase()
     {
-        float direction = Mathf.Sign(player.position.x - transform.position.x);//篹出左右(左:-1，右:1)
+        float direction = Mathf.Sign(player.position.x - transform.position.x);//算出左右(左:-1，右:1)
         rb.linearVelocity = new Vector2(direction * chaseSpeed, rb.linearVelocity.y);//往角色方向追擊
 
         // 面朝玩家
@@ -72,7 +79,28 @@ public class Enemy : MonoBehaviour
             idleDirection *= -1;
         }
     }
-    
+
+    void Attack()
+    {
+        Debug.Log("Attack 被呼叫了");
+        isAttacking = true;
+        rb.linearVelocity = Vector2.zero;//攻擊時停下來
+        animator.SetTrigger("Attack");
+        Invoke("AttackEnd", 1f); // 1秒後結束攻擊狀態，根據你動畫長度調整
+    }
+
+    // 掛在攻擊動畫打中的那一幀，用 Animation Event 呼叫
+    public void DealDamage()
+    {
+        //blood.damage(1);
+    }
+
+    // 掛在攻擊動畫最後一幀，用 Animation Event 呼叫
+    public void AttackEnd()
+    {
+        isAttacking = false;
+    }
+
     public void TakeDamage(int damage)//傷害計算
     {
         if (isDead) return;
