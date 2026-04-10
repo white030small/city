@@ -26,6 +26,8 @@ public class Enemy : MonoBehaviour
     [Header("攻擊")]
     public float Attackrange = 1f;
     public blood blood;
+    public float attackCooldown = 1f; // 冷卻時間
+    private float cooldownTimer = 0f; //冷卻
 
 
     void Start()
@@ -43,13 +45,19 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        // 冷卻倒數
+        if (cooldownTimer > 0)
+        {
+            cooldownTimer -= Time.deltaTime;
+        }
+
         if (isDead || isAttacking) return;//死亡或攻擊中就停
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);//敵人跟主角的距離
-        //Debug.Log("距離: " + distanceToPlayer);
 
-        if (distanceToPlayer <= Attackrange)
+        if (distanceToPlayer <= Attackrange && cooldownTimer <= 0)
         {
+            cooldownTimer = attackCooldown;
             Attack();//攻擊（最近才打）
         }
         else if (distanceToPlayer <= detectRange)//小於設定值就追擊
@@ -82,7 +90,7 @@ public class Enemy : MonoBehaviour
 
     void Attack()
     {
-        Debug.Log("Attack 被呼叫了");
+        //Debug.Log("Attack 被呼叫了");
         isAttacking = true;
         rb.linearVelocity = Vector2.zero;//攻擊時停下來
         animator.SetTrigger("Attack");
