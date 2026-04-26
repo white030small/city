@@ -128,15 +128,23 @@ public class Enemy : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Kinematic;//把角色的重力停止
         animator.SetTrigger("Die");//切到死亡動畫
         GetComponent<Collider2D>().enabled = false;//碰撞箱關閉
-        //SpawnAnimal();
+        SpawnAnimal();
     }
 
-    /*public void SpawnAnimal()
+    public void SpawnAnimal()
     {
         if (animalPrefab != null)
         {
-            Instantiate(animalPrefab, transform.position, Quaternion.identity);
+            Vector2 spawnPos = new Vector2(transform.position.x, transform.position.y - 0.5f);
+            Instantiate(animalPrefab, spawnPos, Quaternion.identity);
+        }
+        
+        // 觸發第一次殺敵特效
+        FirstKillEffect effect = FindObjectOfType<FirstKillEffect>();
+        if (effect != null)
+        {
+            effect.TriggerEffect();
         }
         Destroy(gameObject);
-    }*/
+    }
 }
