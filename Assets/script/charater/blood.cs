@@ -1,62 +1,56 @@
 using UnityEngine;
-using System.Collections.Generic;
-using UnityEngine.UI;
-using TMPro;
-using System.Collections;
-
 
 public class blood : MonoBehaviour
 {
-    public int now_blood;
-    public int live = 1;
-    public Slider UI_health;
-    public TMP_Text hpText;
+    [Header("血量設定")]
+    public int maxBlood = 4;
+    public GameObject[] films;
+    private int nowBlood;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        ResetHp();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        hpText.text = $"{now_blood}%";//顯示目前數值
-    }
-
-    public void ResetHp()
-    {
-
-        if(live == 1)
-        {
-            now_blood = 100;//賦予上限值
-        }
-        else
-        {
-            now_blood = 0;//歸零
-        }
-
-        UI_health.value = now_blood;//更新UI
+        nowBlood = maxBlood;
+        UpdateUI();
     }
 
     public void damage(int much)
     {
+        nowBlood -= much;
+        if (nowBlood < 0) nowBlood = 0;
+        UpdateUI();
 
-        now_blood -= much;//減去受到傷害
-        UI_health.value = now_blood;//更新UI
-
-        if(now_blood <= 0)
+        if (nowBlood <= 0)
         {
-            live -= 1;//死亡重新並且復活
-            ResetHp();//更新生命值狀態
+            Die();
         }
-
     }
 
     public void upper(int much)
     {
-        now_blood += much;//增加生命值
-        if (now_blood > 100) now_blood = 100;//防生命值過100
-        UI_health.value = now_blood;//更新UI
+        nowBlood += much;
+        if (nowBlood > maxBlood) nowBlood = maxBlood;
+        UpdateUI();
+    }
+
+    public void IncreaseMax(int amount)
+    {
+        maxBlood += amount;
+        if (maxBlood > 10) maxBlood = 10;
+        nowBlood += amount;
+        if (nowBlood > maxBlood) nowBlood = maxBlood;
+        UpdateUI();
+    }
+
+    void UpdateUI()
+    {
+        for (int i = 0; i < films.Length; i++)
+        {
+            films[i].SetActive(i < nowBlood); // 整個物件開關
+        }
+    }
+
+    void Die()
+    {
+        Time.timeScale = 0;
     }
 }

@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour
     // 掛在攻擊動畫打中的那一幀，用 Animation Event 呼叫
     public void DealDamage()
     {
-        //blood.damage(1);
+        blood.damage(1);
     }
 
     // 掛在攻擊動畫最後一幀，用 Animation Event 呼叫
