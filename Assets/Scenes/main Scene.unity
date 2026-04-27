@@ -205,7 +205,7 @@ Transform:
   m_GameObject: {fileID: 38416450}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.99350435, z: -0, w: -0.11379451}
-  m_LocalPosition: {x: -9.52, y: 1.36, z: 0.06}
+  m_LocalPosition: {x: -9.76, y: 1.36, z: 0}
   m_LocalScale: {x: 0.6619458, y: 0.60923874, z: 0.71716}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -226,6 +226,10 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 6
   runMultiplier: 1.5
+  crouchSpeedMultiplier: 0.4
+  dashSpeed: 12
+  dashDuration: 0.25
+  dashCooldown: 1
   rbReality: {fileID: 38416457}
   rbSpirit: {fileID: 1336527995}
   world: 0
@@ -2735,7 +2739,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8477881290607229762, guid: 83a2cf33937a5df4daf6885114e7507e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.52
+      value: -9.76
       objectReference: {fileID: 0}
     - target: {fileID: 8477881290607229762, guid: 83a2cf33937a5df4daf6885114e7507e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2743,7 +2747,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8477881290607229762, guid: 83a2cf33937a5df4daf6885114e7507e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.06
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8477881290607229762, guid: 83a2cf33937a5df4daf6885114e7507e, type: 3}
       propertyPath: m_LocalRotation.w

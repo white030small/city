@@ -100,7 +100,12 @@ public class Enemy : MonoBehaviour
     // 掛在攻擊動畫打中的那一幀，用 Animation Event 呼叫
     public void DealDamage()
     {
-        blood.damage(1);
+        // 先確認玩家還在攻擊範圍內才扣血
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        if (distanceToPlayer <= Attackrange)
+        {
+            blood.damage(1);
+        }
     }
 
     // 掛在攻擊動畫最後一幀，用 Animation Event 呼叫
