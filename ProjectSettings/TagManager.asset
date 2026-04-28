@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ground
+  - Enemy_down
+  - Enemy_stand
+  - Enemy_lay
+  - Enemy_fly
   layers:
   - Default
   - TransparentFX

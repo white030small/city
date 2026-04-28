@@ -19,6 +19,7 @@ public class mainchar : MonoBehaviour
     public float crouchSpeedMultiplier = 0.4f;  // 蹲下走路的速度倍率
     private bool isCrouching = false;            // 是否正在蹲下
 
+    private SpriteRenderer spriteRenderer;//圖片素材
     // ============================
     // 衝刺（滑鏟）
     // ============================
@@ -68,6 +69,7 @@ public class mainchar : MonoBehaviour
     void Start()
     {
         playerCollider = GetComponent<Collider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
 
@@ -87,6 +89,17 @@ public class mainchar : MonoBehaviour
         // ---- 讀取輸入 ----
         moveInputX = Input.GetAxisRaw("Horizontal");  // A/D 或方向鍵的水平輸入
         isRunning = Input.GetKey(KeyCode.LeftShift);   // 按住 Shift = 跑步
+        float finalX = moveInputX;
+
+        if(moveInputX == -1 && world == 0)//圖片翻轉
+        {
+            spriteRenderer.flipX = true;
+        }
+        if(moveInputX == 1 && world == 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+
 
         // ---- 蹲下：按住 S 鍵或下方向鍵 ----
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
@@ -119,7 +132,7 @@ public class mainchar : MonoBehaviour
             changeworld();
         }
 
-        // ---- 根據目前世界執行移動 ----
+        // ---- 根據目前世界執行移動 ---- 
         if (world == 1)
         {
             ApplyHorizontalMovement(rbSpirit);   // 靈界：只移動靈體
@@ -130,7 +143,7 @@ public class mainchar : MonoBehaviour
             spritgoreality();                    // 同時同步靈體位置
         }
     }
-
+    
     // ============================
     // 蹲下相關
     // ============================
@@ -180,7 +193,12 @@ public class mainchar : MonoBehaviour
         dashTimer -= Time.deltaTime;
 
         // 取得目前操作的剛體
-        Rigidbody2D rb = (world == 1) ? rbSpirit : rbReality;
+        Rigidbody2D rb;
+
+        if (world == 1)
+            rb = rbSpirit;
+        else
+            rb = rbReality;
 
         // 強制往衝刺方向移動，Y 軸保持不變
         if (rb != null)

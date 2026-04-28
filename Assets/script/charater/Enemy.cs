@@ -72,7 +72,10 @@ public class Enemy : MonoBehaviour
         rb.linearVelocity = new Vector2(direction * chaseSpeed, rb.linearVelocity.y);//往角色方向追擊
 
         // 面朝玩家
-        spriteRenderer.flipX = direction < 0;
+        if (direction < 0)
+            spriteRenderer.flipX = true;   // 面朝左，翻轉圖片
+        else
+            spriteRenderer.flipX = false;  // 面朝右，不翻轉
     }
 
     void IdleMove()//(可能後續切成動畫)

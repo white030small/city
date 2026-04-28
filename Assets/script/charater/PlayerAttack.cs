@@ -11,7 +11,8 @@ public class PlayerAttack : MonoBehaviour
 
     private float cooldownTimer = 0f; //冷卻
     private bool facingRight = true;
-
+    private float moveInput ;
+    private float finalX = 1 ;
     void Update()
     {
         // 冷卻倒數
@@ -21,10 +22,15 @@ public class PlayerAttack : MonoBehaviour
         }
 
         // 判斷面朝方向
-        float moveInput = Input.GetAxisRaw("Horizontal");
-        if (moveInput > 0) facingRight = true;//面朝右
-        else if (moveInput < 0) facingRight = false;//面朝左
-
+        moveInput = Input.GetAxisRaw("Horizontal");
+        if (moveInput > 0){
+            facingRight = true;//面朝右
+            finalX = moveInput;
+        } 
+        else if (moveInput < 0) {
+            facingRight = false;//面朝左
+            finalX = moveInput;
+        }
         // 按下攻擊鍵
         if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0)
         {
@@ -36,6 +42,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack()
     {
+
         // 在攻擊點周圍找所有敵人
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(
             attackPoint.position, 
@@ -46,7 +53,14 @@ public class PlayerAttack : MonoBehaviour
         // 對每個打到的敵人造成傷害
         foreach (Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+            float direction = Mathf.Sign(enemy.transform.position.x - transform.position.x);//算出左右(左:-1，右:1)
+
+            if(direction < 0 && finalX < 0){
+                enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+            }
+            if(direction > 0 && finalX > 0){
+                enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+            }
         }
     }
 

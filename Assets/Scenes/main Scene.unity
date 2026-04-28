@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 471baca700da16d4cb40dcc278fa4cec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxBlood: 4
+  maxBlood: 100
   films:
   - {fileID: 786368869}
   - {fileID: 2117660714}
@@ -1717,7 +1717,7 @@ GameObject:
   - component: {fileID: 1336527995}
   m_Layer: 0
   m_Name: second char
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1878,6 +1878,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainchar: {fileID: 38416455}
+  isGrounded: 0
+  dashSpeed: 12
+  dashDuration: 0.25
+  dashCooldown: 1
 --- !u!1 &1417254117
 GameObject:
   m_ObjectHideFlags: 0
@@ -2824,6 +2828,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: second char
       objectReference: {fileID: 0}
+    - target: {fileID: 4911834312065752886, guid: 7e2ebcb610e3ae040ba369139f68e514, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4947566226521022267, guid: 7e2ebcb610e3ae040ba369139f68e514, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6803
@@ -2891,7 +2899,7 @@ PrefabInstance:
       objectReference: {fileID: 38416459}
     - target: {fileID: 447506562951881136, guid: be427f22e6e345849b617976bbd2e12b, type: 3}
       propertyPath: health
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 447506562951881136, guid: be427f22e6e345849b617976bbd2e12b, type: 3}
       propertyPath: chaseSpeed
@@ -2999,11 +3007,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4198179946908285822, guid: be427f22e6e345849b617976bbd2e12b, type: 3}
       propertyPath: m_Name
-      value: Enemy(down
+      value: Enemy_lay
       objectReference: {fileID: 0}
     - target: {fileID: 4198179946908285822, guid: be427f22e6e345849b617976bbd2e12b, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4198179946908285822, guid: be427f22e6e345849b617976bbd2e12b, type: 3}
+      propertyPath: m_TagString
+      value: Enemy_lay
       objectReference: {fileID: 0}
     - target: {fileID: 5717032475070001752, guid: be427f22e6e345849b617976bbd2e12b, type: 3}
       propertyPath: m_Size.x
