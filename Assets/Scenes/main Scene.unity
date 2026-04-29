@@ -331,6 +331,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  isCrouching: 0
 --- !u!114 &38416459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,7 +344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 471baca700da16d4cb40dcc278fa4cec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxBlood: 100
+  maxBlood: 4
   films:
   - {fileID: 786368869}
   - {fileID: 2117660714}
