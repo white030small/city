@@ -13,6 +13,9 @@ public class PlayerAttack : MonoBehaviour
     private bool facingRight = true;
     private float moveInput ;
     private float finalX = 1 ;
+
+    public bool isCrouching = false;
+
     void Update()
     {
         // 冷卻倒數
@@ -23,9 +26,10 @@ public class PlayerAttack : MonoBehaviour
 
         // 判斷面朝方向
         moveInput = Input.GetAxisRaw("Horizontal");
+
         if (moveInput > 0){
             facingRight = true;//面朝右
-            finalX = moveInput;
+            finalX = moveInput;//紀錄最後面朝的方向
         } 
         else if (moveInput < 0) {
             facingRight = false;//面朝左
@@ -37,6 +41,15 @@ public class PlayerAttack : MonoBehaviour
             Attack();//連接到敵人
             cooldownTimer = attackCooldown;
             Debug.Log("攻擊");
+        }
+
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            isCrouching = true;
+        }
+        else
+        {
+            isCrouching = false;
         }
     }
 
@@ -55,11 +68,33 @@ public class PlayerAttack : MonoBehaviour
         {
             float direction = Mathf.Sign(enemy.transform.position.x - transform.position.x);//算出左右(左:-1，右:1)
 
-            if(direction < 0 && finalX < 0){
-                enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+            if(direction < 0 && finalX < 0){//面朝左邊
+            
+                if(isCrouching == true){
+                    if(enemy.CompareTag("Enemy_lay") || enemy.CompareTag("Enemy_stand")){
+                        enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+                    }
+                }
+
+                if(isCrouching == false){
+                    if(enemy.CompareTag("Enemy_stand")){
+                        enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+                    }
+                }
             }
-            if(direction > 0 && finalX > 0){
-                enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+            if(direction > 0 && finalX > 0){//面朝右邊
+
+                if(isCrouching == true){
+                    if(enemy.CompareTag("Enemy_lay") || enemy.CompareTag("Enemy_stand")){
+                        enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+                    }
+                }
+
+                if(isCrouching == false){
+                    if(enemy.CompareTag("Enemy_stand")){
+                        enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+                    }
+                }
             }
         }
     }
