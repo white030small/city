@@ -55,6 +55,7 @@ public class Enemy : MonoBehaviour
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);//敵人跟主角的距離
 
+
         if (distanceToPlayer <= Attackrange && cooldownTimer <= 0)
         {
             cooldownTimer = attackCooldown;
