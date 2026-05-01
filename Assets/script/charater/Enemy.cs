@@ -148,7 +148,7 @@ public class Enemy : MonoBehaviour
         }
         
         // 觸發第一次殺敵特效
-        FirstKillEffect effect = FindObjectOfType<FirstKillEffect>();
+        FirstKillEffect effect = FindFirstObjectByType<FirstKillEffect>();
         if (effect != null)
         {
             effect.TriggerEffect();

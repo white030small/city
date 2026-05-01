@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: 0ef26e8a639cb33448cca676a16318b1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2894174375612469382
+    second: MC-Sheet_0
+  - first:
+      213: 922068473763439227
+    second: MC-Sheet_1
+  - first:
+      213: 4593940030394172231
+    second: MC-Sheet_2
+  - first:
+      213: 5544336533984892208
+    second: MC-Sheet_3
+  - first:
+      213: 8445123257917468396
+    second: MC-Sheet_4
+  - first:
+      213: 3001918684432061416
+    second: MC-Sheet_5
+  - first:
+      213: -3020060889789723128
+    second: MC-Sheet_6
+  - first:
+      213: -1103197794042056565
+    second: MC-Sheet_7
+  - first:
+      213: 122417803688711660
+    second: MC-Sheet_8
+  - first:
+      213: -6125839224241722249
+    second: MC-Sheet_9
+  - first:
+      213: -1203437372230811335
+    second: MC-Sheet_10
+  - first:
+      213: -3184323875622152119
+    second: MC-Sheet_11
+  - first:
+      213: -3662024523701707031
+    second: MC-Sheet_12
+  - first:
+      213: 83444693237487807
+    second: MC-Sheet_13
+  - first:
+      213: -8190508797053943621
+    second: MC-Sheet_14
+  - first:
+      213: -1346684225064403518
+    second: MC-Sheet_15
+  - first:
+      213: 9057580101985987680
+    second: MC-Sheet_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MC-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 17
+        width: 55
+        height: 127
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7fa4974db3d5d7d0800000000000000
+      internalID: -2894174375612469382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 17
+        width: 55
+        height: 127
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b72a14d3468dbcc00800000000000000
+      internalID: 922068473763439227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 17
+        width: 55
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 743871f2e14f0cf30800000000000000
+      internalID: 4593940030394172231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 17
+        width: 55
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 035d367d3b071fc40800000000000000
+      internalID: 5544336533984892208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 17
+        width: 55
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cee6f80ebda133570800000000000000
+      internalID: 8445123257917468396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 806
+        y: 18
+        width: 58
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e35e2e7325f8a920800000000000000
+      internalID: 3001918684432061416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 18
+        width: 59
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80e88082f969616d0800000000000000
+      internalID: -3020060889789723128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 1062
+        y: 17
+        width: 54
+        height: 124
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b80f0298377a0b0f0800000000000000
+      internalID: -1103197794042056565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 1189
+        y: 18
+        width: 56
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce59c07085ae2b100800000000000000
+      internalID: 122417803688711660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 1319
+        y: 17
+        width: 58
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77ceaef7ea5acfaa0800000000000000
+      internalID: -6125839224241722249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 1446
+        y: 17
+        width: 54
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 931c0c606188c4fe0800000000000000
+      internalID: -1203437372230811335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 1562
+        y: 18
+        width: 75
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9481fbf6e420fc3d0800000000000000
+      internalID: -3184323875622152119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 1702
+        y: 19
+        width: 61
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ee9df11910ed2dc0800000000000000
+      internalID: -3662024523701707031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 1818
+        y: 18
+        width: 75
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb8dfc2a184782100800000000000000
+      internalID: 83444693237487807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 1944
+        y: 18
+        width: 80
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb043ede4a7755e80800000000000000
+      internalID: -8190508797053943621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 2086
+        y: 19
+        width: 50
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cdf96415dd9f4de0800000000000000
+      internalID: -1346684225064403518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 2202
+        y: 18
+        width: 75
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06c65871d1df2bd70800000000000000
+      internalID: 9057580101985987680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: fba0ce5bc2ca47f40a2e9ce7a18fa394
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      MC-Sheet_0: -2894174375612469382
+      MC-Sheet_1: 922068473763439227
+      MC-Sheet_10: -1203437372230811335
+      MC-Sheet_11: -3184323875622152119
+      MC-Sheet_12: -3662024523701707031
+      MC-Sheet_13: 83444693237487807
+      MC-Sheet_14: -8190508797053943621
+      MC-Sheet_15: -1346684225064403518
+      MC-Sheet_16: 9057580101985987680
+      MC-Sheet_2: 4593940030394172231
+      MC-Sheet_3: 5544336533984892208
+      MC-Sheet_4: 8445123257917468396
+      MC-Sheet_5: 3001918684432061416
+      MC-Sheet_6: -3020060889789723128
+      MC-Sheet_7: -1103197794042056565
+      MC-Sheet_8: 122417803688711660
+      MC-Sheet_9: -6125839224241722249
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

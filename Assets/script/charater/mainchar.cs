@@ -66,10 +66,14 @@ public class mainchar : MonoBehaviour
     [Header("攝像機")]
     public camermover camermover;          // 攝影機控制器
 
+    [Header("動畫")]
+    public Animator animator;
+
     void Start()
     {
         playerCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
 
@@ -91,10 +95,32 @@ public class mainchar : MonoBehaviour
         isRunning = Input.GetKey(KeyCode.LeftShift);   // 按住 Shift = 跑步
         float finalX = moveInputX;
 
+        if(moveInputX == 0 && world == 0)
+        {
+            animator.SetBool("IDLE" , true);
+            animator.SetBool("walk" , false);
+            animator.SetBool("run" , false);
+        }
+
+        if(moveInputX != 0 && world == 0)
+        {
+            animator.SetBool("walk" , true);
+            animator.SetBool("IDLE" , false);
+            animator.SetBool("run" , false);
+        }
+
+        if(moveInputX != 0 && world == 0 && isRunning)
+        {
+            animator.SetBool("walk" , false);
+            animator.SetBool("IDLE" , false);
+            animator.SetBool("run" , true);
+        }
+
         if(moveInputX == -1 && world == 0)//圖片翻轉
         {
             spriteRenderer.flipX = true;
         }
+
         if(moveInputX == 1 && world == 0)
         {
             spriteRenderer.flipX = false;

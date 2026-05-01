@@ -19,16 +19,43 @@ public class sprit : MonoBehaviour
 
     private Collider2D playerCollider;    // 玩家的碰撞箱
 
+    [Header("動畫")]
+    public Animator animator;
+
     void Start()
     {
         playerCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         moveInputX = Input.GetAxisRaw("Horizontal");  // A/D 或方向鍵的水平輸入
+        bool isRunning = Input.GetKey(KeyCode.LeftShift);   // 按住 Shift = 跑步
+
+        if(moveInputX == 0 )
+        {
+            animator.SetBool("IDLE" , true);
+            animator.SetBool("walk" , false);
+            animator.SetBool("run" , false);
+        }
+
+        if(moveInputX != 0 )
+        {
+            animator.SetBool("walk" , true);
+            animator.SetBool("IDLE" , false);
+            animator.SetBool("run" , false);
+        }
+
+        if(moveInputX != 0 &&  isRunning)
+        {
+            animator.SetBool("walk" , false);
+            animator.SetBool("IDLE" , false);
+            animator.SetBool("run" , true);
+        }
+        
         if(moveInputX == -1 )//圖片翻轉
         {
             spriteRenderer.flipX = true;
