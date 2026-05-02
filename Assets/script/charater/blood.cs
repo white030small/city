@@ -17,7 +17,7 @@ public class blood : MonoBehaviour
     {
         nowBlood -= much;
         if (nowBlood < 0) nowBlood = 0;
-        UpdateUI();
+        DamageUI();
 
         if (nowBlood <= 0)
         {
@@ -46,6 +46,18 @@ public class blood : MonoBehaviour
         for (int i = 0; i < films.Length; i++)
         {
             films[i].SetActive(i < nowBlood); // 整個物件開關
+        }
+    }
+
+    void DamageUI()
+    {
+        for (int i = 0; i < films.Length; i++)
+        {
+            if (i >= nowBlood && films[i].activeSelf)
+            {
+                Animator anim = films[i].GetComponent<Animator>();
+                anim.SetTrigger("Burn");
+            }
         }
     }
 
