@@ -5,6 +5,7 @@ public class PlayerAttack : MonoBehaviour
     [Header("攻擊設定")]
     public float attackRange = 1f;      // 攻擊距離
     public float attackCooldown = 0.5f; // 冷卻時間
+    public float gun_attackCooldown = 2f; // 冷卻時間
     public int attackDamage = 1;        // 傷害
     public Transform attackPoint;       // 攻擊判定的中心點
     public LayerMask enemyLayer;        // 敵人的 Layer
@@ -14,8 +15,10 @@ public class PlayerAttack : MonoBehaviour
     private float moveInput ;
     private float finalX = 1 ;
 
+    public int type_2 = 1;
     public bool isCrouching = false;
-
+    public bool knife = true;
+    public bool gun = false;
     void Update()
     {
         // 冷卻倒數
@@ -35,14 +38,49 @@ public class PlayerAttack : MonoBehaviour
             facingRight = false;//面朝左
             finalX = moveInput;
         }
+
         // 按下攻擊鍵
-        if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0)
+        if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0 && knife == true) 
         {
-            Attack();//連接到敵人
+            knife_Attack();//連接到敵人
             cooldownTimer = attackCooldown;
             Debug.Log("攻擊");
         }
 
+        // 按下攻擊鍵
+        if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0 && gun == true) 
+        {
+            gun_Attack();//連接到敵人
+            cooldownTimer = gun_attackCooldown;
+            Debug.Log("攻擊");
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            knife = true;
+            gun = false;
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (knife == true) // 從刀切到槍
+            {
+                knife = false;
+                gun = true;
+                type_2 = 1; // 預設簡單模式
+                Debug.Log(type_2);
+            }
+            else // 已經是槍，切換模式
+            {
+                if(type_2 == 1){
+                    type_2 = 2;
+                }
+                else{
+                    type_2 = 1 ;
+                }
+                Debug.Log(type_2);
+            }
+        }
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             isCrouching = true;
@@ -53,7 +91,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    void Attack()
+    void knife_Attack()
     {
 
         // 在攻擊點周圍找所有敵人
@@ -98,7 +136,10 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
+    void gun_Attack()
+    {
 
+    }
     // 在 Scene 視窗顯示攻擊範圍（方便調整）
     void OnDrawGizmosSelected()
     {
