@@ -334,6 +334,8 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  gun_attackRange: 8
+  gunDamage: 10
   type_2: 1
   isCrouching: 0
   knife: 1

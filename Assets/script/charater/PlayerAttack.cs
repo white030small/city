@@ -9,6 +9,8 @@ public class PlayerAttack : MonoBehaviour
     public int attackDamage = 1;        // 傷害
     public Transform attackPoint;       // 攻擊判定的中心點
     public LayerMask enemyLayer;        // 敵人的 Layer
+    public float gun_attackRange = 10f;
+    public int gunDamage = 10;
 
     private float cooldownTimer = 0f; //冷卻
     private bool facingRight = true;
@@ -21,6 +23,7 @@ public class PlayerAttack : MonoBehaviour
     public bool gun = false;
     void Update()
     {
+        Debug.DrawRay(attackPoint.position, new Vector2(finalX * gun_attackRange, 0), Color.green);
         // 冷卻倒數
         if (cooldownTimer > 0)
         {
@@ -138,8 +141,37 @@ public class PlayerAttack : MonoBehaviour
     }
     void gun_Attack()
     {
+        Debug.Log("gun_Attack 被呼叫了");
+        Vector2 shootDirection;
+        
+        if (finalX > 0){
+            shootDirection = Vector2.right;  // 面朝右，往右射
+        }
+        else{
+            shootDirection = Vector2.left;   // 面朝左，往左射
+        }
+            
+        RaycastHit2D hit = Physics2D.Raycast(attackPoint.position,shootDirection,gun_attackRange, enemyLayer);
+
+        Debug.Log("有打到東西嗎: " + (hit.collider != null));
+
+        if(hit.collider != null){
+            if(isCrouching == true){
+                if(hit.collider.CompareTag("Enemy_lay") || hit.collider.CompareTag("Enemy_stand")){
+                    hit.collider.GetComponent<Enemy>().TakeDamage(gunDamage);
+                    Debug.Log("薅到人了");
+                }
+            }
+
+            if(isCrouching == false ){
+                if(hit.collider.CompareTag("Enemy_stand")){
+                    hit.collider.GetComponent<Enemy>().TakeDamage(gunDamage);
+                }
+            }
+        }
 
     }
+    
     // 在 Scene 視窗顯示攻擊範圍（方便調整）
     void OnDrawGizmosSelected()
     {
