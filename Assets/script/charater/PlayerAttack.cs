@@ -139,9 +139,9 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
+    
     void gun_Attack()
     {
-        Debug.Log("gun_Attack 被呼叫了");
         Vector2 shootDirection;
         
         if (finalX > 0){
@@ -156,20 +156,8 @@ public class PlayerAttack : MonoBehaviour
         Debug.Log("有打到東西嗎: " + (hit.collider != null));
 
         if(hit.collider != null){
-            if(isCrouching == true){
-                if(hit.collider.CompareTag("Enemy_lay") || hit.collider.CompareTag("Enemy_stand")){
-                    hit.collider.GetComponent<Enemy>().TakeDamage(gunDamage);
-                    Debug.Log("薅到人了");
-                }
-            }
-
-            if(isCrouching == false ){
-                if(hit.collider.CompareTag("Enemy_stand")){
-                    hit.collider.GetComponent<Enemy>().TakeDamage(gunDamage);
-                }
-            }
+            hit.collider.GetComponent<Enemy>().TakeDamage(gunDamage);
         }
-
     }
     
     // 在 Scene 視窗顯示攻擊範圍（方便調整）
