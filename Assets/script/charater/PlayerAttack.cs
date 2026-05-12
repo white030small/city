@@ -21,6 +21,9 @@ public class PlayerAttack : MonoBehaviour
     public bool isCrouching = false;
     public bool knife = true;
     public bool gun = false;
+    public gun gun_bullet;
+    public GameObject bulletPrefab;
+
     void Update()
     {
         Debug.DrawRay(attackPoint.position, new Vector2(finalX * gun_attackRange, 0), Color.green);
@@ -142,7 +145,7 @@ public class PlayerAttack : MonoBehaviour
     
     void gun_Attack()
     {
-        Vector2 shootDirection;
+        /*Vector2 shootDirection;
         
         if (finalX > 0){
             shootDirection = Vector2.right;  // 面朝右，往右射
@@ -157,7 +160,15 @@ public class PlayerAttack : MonoBehaviour
 
         if(hit.collider != null){
             hit.collider.GetComponent<Enemy>().TakeDamage(gunDamage);
-        }
+        }*/
+
+        GameObject bullet = Instantiate(bulletPrefab, attackPoint.position, Quaternion.identity);
+        
+        if (finalX < 0)
+            bullet.GetComponent<gun>().leftorright(true);   // 往左
+        else
+            bullet.GetComponent<gun>().leftorright(false);  // 往右
+
     }
     
     // 在 Scene 視窗顯示攻擊範圍（方便調整）
