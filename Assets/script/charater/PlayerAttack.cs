@@ -21,7 +21,6 @@ public class PlayerAttack : MonoBehaviour
     public bool isCrouching = false;
     public bool knife = true;
     public bool gun = false;
-    public gun gun_bullet;
     public GameObject bulletPrefab;
 
     void Update()
