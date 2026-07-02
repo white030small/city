@@ -74,7 +74,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (knife == true) // 從刀切到槍
             {
-                bulletUI.ShowUI();
+                //bulletUI.ShowUI();
                 knife = false;
                 gun = true;
                 type_2 = 1; // 預設簡單模式

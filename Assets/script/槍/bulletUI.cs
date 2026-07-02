@@ -22,6 +22,7 @@ public class bulletUI : MonoBehaviour
     // 外部呼叫這個來顯示 UI
     public void ShowUI()
     {
+        gun_bullet[gun_time].SetActive(true); // 整個物件開關
         canvasGroup.alpha = 1f;    // 完全顯示
         showtime = 2f;            // 顯示 2 秒
         isFading = false;
@@ -41,8 +42,9 @@ public class bulletUI : MonoBehaviour
         if (showtime > 0)
         {
             showtime -= Time.deltaTime;
-            if (showtime <= 0)
+            if (showtime <= 0){
                 isFading = true;   // 2 秒到了，開始淡出
+            }
         }
         if(isFading)
         {
