@@ -18,6 +18,7 @@ public class gun : MonoBehaviour
     {
         bullet = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
         if(left){
             spriteRenderer.flipX = true;
             bullet.linearVelocity = new Vector2(-speed, 0);
@@ -25,7 +26,7 @@ public class gun : MonoBehaviour
         else{
             bullet.linearVelocity = new Vector2(speed, 0);
         }
-        Destroy(gameObject, 0.1f); // 2秒後自動消失
+        Destroy(gameObject, 0.2f); // 2秒後自動消失
     }
 
     void OnTriggerEnter2D(Collider2D enemy)

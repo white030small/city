@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     public LayerMask enemyLayer;        // 敵人的 Layer
     public float gun_attackRange = 10f;
     public int gunDamage = 10;
+    public int gun_time = 5;
 
     private float cooldownTimer = 0f; //冷卻
     private bool facingRight = true;
@@ -23,6 +24,9 @@ public class PlayerAttack : MonoBehaviour
     public bool gun = false;
     public GameObject bulletPrefab;
 
+    [Header("子彈UI")]
+    public bulletUI bulletUI;
+
     void Update()
     {
         Debug.DrawRay(attackPoint.position, new Vector2(finalX * gun_attackRange, 0), Color.green);
@@ -31,7 +35,6 @@ public class PlayerAttack : MonoBehaviour
         {
             cooldownTimer -= Time.deltaTime;
         }
-
         // 判斷面朝方向
         moveInput = Input.GetAxisRaw("Horizontal");
 
@@ -53,9 +56,10 @@ public class PlayerAttack : MonoBehaviour
         }
 
         // 按下攻擊鍵
-        if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0 && gun == true) 
+        if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0 && gun == true && gun_time > 0) 
         {
             gun_Attack();//連接到敵人
+            bulletUI.ShowUI();
             cooldownTimer = gun_attackCooldown;
             Debug.Log("攻擊");
         }
@@ -70,6 +74,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (knife == true) // 從刀切到槍
             {
+                bulletUI.ShowUI();
                 knife = false;
                 gun = true;
                 type_2 = 1; // 預設簡單模式
@@ -77,6 +82,7 @@ public class PlayerAttack : MonoBehaviour
             }
             else // 已經是槍，切換模式
             {
+                bulletUI.ShowUI();
                 if(type_2 == 1){
                     type_2 = 2;
                 }
