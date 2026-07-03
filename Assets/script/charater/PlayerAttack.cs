@@ -59,7 +59,8 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0 && gun == true && gun_time > 0) 
         {
             gun_Attack();//連接到敵人
-            bulletUI.ShowUI();
+            gun_time -= 1;
+            bulletUI.ShowAttackUI();
             cooldownTimer = gun_attackCooldown;
             Debug.Log("攻擊");
         }
@@ -74,7 +75,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (knife == true) // 從刀切到槍
             {
-                //bulletUI.ShowUI();
+                bulletUI.ShowUI();
                 knife = false;
                 gun = true;
                 type_2 = 1; // 預設簡單模式
