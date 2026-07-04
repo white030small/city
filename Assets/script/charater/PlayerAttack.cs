@@ -33,6 +33,8 @@ public class PlayerAttack : MonoBehaviour
     public GameObject GunUI;
     public GameObject KniUI;
 
+    [Header("角色")]
+    public mainchar mainchar;
     void Update()
     {
         Debug.DrawRay(attackPoint.position, new Vector2(finalX * gun_attackRange, 0), Color.green);
@@ -75,6 +77,7 @@ public class PlayerAttack : MonoBehaviour
         {
             isReloading = true;
             reloadTimer = 2f; // 第一發等 2 秒
+            mainchar.walk(false);
         }
 
         if (isReloading)
@@ -83,12 +86,19 @@ public class PlayerAttack : MonoBehaviour
             if (reloadTimer <= 0)
             {
                 gun_time += 1;
-                bulletUI.ShowChangeUI(); // 更新 UI
                 if (gun_time >= 5)
+                {
+                    bulletUI.ShowChangeUI();
                     isReloading = false; // 補滿了
+                    mainchar.walk(true);
+                }
                 else
+                {
+                    bulletUI.ShowChangeUI(); // 更新 UI
                     reloadTimer = 2f; // 繼續補下一發
+                }
             }
+            return;
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha1))

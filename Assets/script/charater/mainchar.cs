@@ -12,6 +12,8 @@ public class mainchar : MonoBehaviour
     private float moveInputX;             // 水平輸入值（-1 = 左, 1 = 右, 0 = 不動）
     private bool isRunning;               // 是否正在跑步
 
+    public bool canwalk = true;
+
     // ============================
     // 蹲下
     // ============================
@@ -68,6 +70,7 @@ public class mainchar : MonoBehaviour
 
     [Header("動畫")]
     public Animator animator;
+
 
     void Start()
     {
@@ -174,7 +177,10 @@ public class mainchar : MonoBehaviour
     // 蹲下相關
     // ============================
 
-
+    public void walk(bool ans)
+    {
+        canwalk = ans;
+    }
     /// 開始蹲下：之後可以加縮小碰撞箱、切換蹲下動畫
     void StartCrouch()
     {
@@ -350,24 +356,27 @@ public class mainchar : MonoBehaviour
     /// 水平移動：根據跑步、蹲下、搬東西等狀態計算最終速度
     void ApplyHorizontalMovement(Rigidbody2D rb)
     {
-        if (rb == null) return;
-
-        // 基本速度：跑步就乘以跑步倍率
-        float currentSpeed = isRunning ? moveSpeed * runMultiplier : moveSpeed;
-
-        // 蹲下時速度變慢
-        if (isCrouching)
+        if(canwalk == true)
         {
-            currentSpeed *= crouchSpeedMultiplier;
-        }
+            if (rb == null) return;
 
-        // 搬東西時速度減半
-        if (isDraggingObject)
-        {
-            currentSpeed *= 0.5f;
-        }
+            // 基本速度：跑步就乘以跑步倍率
+            float currentSpeed = isRunning ? moveSpeed * runMultiplier : moveSpeed;
 
-        rb.linearVelocity = new Vector2(moveInputX * currentSpeed, rb.linearVelocity.y);
+            // 蹲下時速度變慢
+            if (isCrouching)
+            {
+                currentSpeed *= crouchSpeedMultiplier;
+            }
+
+            // 搬東西時速度減半
+            if (isDraggingObject)
+            {
+                currentSpeed *= 0.5f;
+            }
+
+            rb.linearVelocity = new Vector2(moveInputX * currentSpeed, rb.linearVelocity.y);
+        }
     }
 
 }

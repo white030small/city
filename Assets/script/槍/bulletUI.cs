@@ -5,9 +5,9 @@ public class bulletUI : MonoBehaviour
     [Header("子彈UI")]
 
     public GameObject[] gun_bullet;
-    public float showtime = 2f;
+    public float showtime = 0f;
     public bool isFading = false;
-    private float fadeDuration = 4.0f; // 淡出花多久
+    private float fadeDuration = 3.0f; // 淡出花多久
     private float fadeTimer = 0f;
     private CanvasGroup canvasGroup;
     public int gun_time = 5;
@@ -18,6 +18,7 @@ public class bulletUI : MonoBehaviour
     private float spinDuration = 0.1f;  // 轉一圈花多久
     private float spinTimer = 0f;//基礎時間值
 
+    public bool reloading = false;//換彈中
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,12 +26,21 @@ public class bulletUI : MonoBehaviour
     }
     public void ShowChangeUI()
     {
+        reloading = true;
+        canvasGroup.alpha = 1f;
         gun_time += 1;
+        if(gun_time >= 1)
+        {
+            gun_bullet[gun_time - 1].SetActive(false); // 整個物件開關
+        }
         gun_bullet[gun_time].SetActive(true); // 整個物件開關
-        canvasGroup.alpha = 1f;    // 完全顯示
-        showtime = 2f;            // 顯示 2 秒
-        isFading = false;
-        fadeTimer = 0f;
+        if(gun_time >= 5)
+        {
+            reloading = false;
+            isFading = false;
+            fadeTimer = 0f;
+            showtime = 0.5f; // 換彈期間不要開始倒數淡出
+        }
     }
 
     // 外部呼叫這個來顯示 UI
@@ -38,14 +48,13 @@ public class bulletUI : MonoBehaviour
     {
         gun_bullet[gun_time].SetActive(true); // 整個物件開關
         canvasGroup.alpha = 1f;    // 完全顯示
-        showtime = 2f;            // 顯示 2 秒
+        showtime = 0.5f;            // 顯示 2 秒
         isFading = false;
         fadeTimer = 0f;
     }
 
     public void ShowAttackUI()
     {
-        Debug.Log("gungun");
         gun_time -= 1;
         gun_bullet[gun_time + 1].SetActive(false);
         gun_bullet[gun_time].SetActive(true);
@@ -58,6 +67,7 @@ public class bulletUI : MonoBehaviour
 
     void Update()
     {
+        if(reloading) return;
         // 旋轉中
         if (isSpinning)
         {
