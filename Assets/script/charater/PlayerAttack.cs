@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -28,6 +29,9 @@ public class PlayerAttack : MonoBehaviour
     public bulletUI bulletUI;
     public float reloadTimer = 0f;
     public bool isReloading = false;
+
+    public GameObject crosshair; // Inspector 裡拖進去
+    public LineRenderer aimLine; // 線的設定
 
     [Header("血量UI")]
     public GameObject GunUI;
@@ -64,7 +68,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         // 按下攻擊鍵
-        if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0 && gun == true && gun_time > 0) 
+        if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0 && gun == true && type_2 == 1 && gun_time > 0) 
         {
             gun_Attack();//連接到敵人
             gun_time -= 1;
@@ -128,11 +132,37 @@ public class PlayerAttack : MonoBehaviour
                     type_2 = 2;
                 }
                 else{
+                    crosshair.SetActive(false);
+                    aimLine.enabled = false;
                     type_2 = 1 ;
                 }
                 Debug.Log(type_2);
             }
         }
+        if(type_2 == 2 && gun == true)
+        {
+            mainchar.walk(false);
+            crosshair.SetActive(true);//瞄準的圖案
+            aimLine.enabled = true;
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//連接到滑鼠現在位置
+            mousePos.z = 0;//z軸固定
+            aimLine.SetPosition(0, attackPoint.position); // 起點：槍口
+            aimLine.SetPosition(1, mousePos);// 終點：滑鼠位置
+
+            if(Input.GetMouseButtonDown(0) && cooldownTimer <= 0 && type_2 == 2 && gun_time > 0)
+            {    
+                // 算出從角色到滑鼠的方向
+                Vector2 direction = (mousePos - attackPoint.position).normalized;
+                
+                GameObject bullet = Instantiate(bulletPrefab, attackPoint.position, Quaternion.identity);
+                bullet.GetComponent<gun>().SetDirection(direction);//把座標傳到Gun
+                
+                gun_time -= 1;
+                bulletUI.ShowAttackUI();
+                cooldownTimer = gun_attackCooldown;
+            }
+        }
+
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             isCrouching = true;
