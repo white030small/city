@@ -26,6 +26,12 @@ public class PlayerAttack : MonoBehaviour
 
     [Header("子彈UI")]
     public bulletUI bulletUI;
+    public float reloadTimer = 0f;
+    public bool isReloading = false;
+
+    [Header("血量UI")]
+    public GameObject GunUI;
+    public GameObject KniUI;
 
     void Update()
     {
@@ -65,16 +71,40 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log("攻擊");
         }
 
+        if (Input.GetKeyDown(KeyCode.R) && gun == true && gun_time < 5 && !isReloading)
+        {
+            isReloading = true;
+            reloadTimer = 2f; // 第一發等 2 秒
+        }
+
+        if (isReloading)
+        {
+            reloadTimer -= Time.deltaTime;
+            if (reloadTimer <= 0)
+            {
+                gun_time += 1;
+                bulletUI.ShowChangeUI(); // 更新 UI
+                if (gun_time >= 5)
+                    isReloading = false; // 補滿了
+                else
+                    reloadTimer = 2f; // 繼續補下一發
+            }
+        }
+
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             knife = true;
             gun = false;
+            KniUI.SetActive(true);
+            GunUI.SetActive(false);
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha2))
         {
             if (knife == true) // 從刀切到槍
             {
+                KniUI.SetActive(false);
+                GunUI.SetActive(true);
                 bulletUI.ShowUI();
                 knife = false;
                 gun = true;
