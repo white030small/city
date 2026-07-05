@@ -45,6 +45,7 @@ public class mainchar : MonoBehaviour
 
     [Header("世界")]
     public int world = 0;                 // 目前所在世界（0 = 現實, 1 = 靈界）
+    public bool canchange = true;
 
     // ============================
     // 跳躍
@@ -71,7 +72,9 @@ public class mainchar : MonoBehaviour
     [Header("動畫")]
     public Animator animator;
 
-
+    [Header("角色攻擊")]
+    public PlayerAttack PlayerAttack;
+    public PlayerAttacksplit PlayerAttacksplit;
     void Start()
     {
         playerCollider = GetComponent<Collider2D>();
@@ -181,6 +184,12 @@ public class mainchar : MonoBehaviour
     {
         canwalk = ans;
     }
+
+    public void change(bool ans)
+    {
+        canchange = ans;
+    }
+
     /// 開始蹲下：之後可以加縮小碰撞箱、切換蹲下動畫
     void StartCrouch()
     {
@@ -329,14 +338,21 @@ public class mainchar : MonoBehaviour
     /// 切換現實與靈界，同時通知攝影機跟隨目標
     void changeworld()
     {
+        if(canchange == false){
+            return;
+        }
         if (world == 0)
         {
             world = 1;
+            PlayerAttack.now_world(1);
+            PlayerAttacksplit.now_world(1);
             camermover.SwitchTarget(true);   // 攝影機跟隨靈體
         }
         else
         {
             world = 0;
+            PlayerAttack.now_world(0);
+            PlayerAttacksplit.now_world(0);
             camermover.SwitchTarget(false);  // 攝影機跟隨現實角色
         }
     }

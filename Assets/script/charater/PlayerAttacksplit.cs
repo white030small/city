@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttacksplit : MonoBehaviour
 {
     [Header("攻擊設定")]
     public float attackRange = 1f;      // 攻擊距離
@@ -43,7 +43,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if(world == 1) {
+        if (world == 0){
             Debug.Log(world);
             return;
         }
@@ -139,7 +139,7 @@ public class PlayerAttack : MonoBehaviour
                 }
                 else{
                     mainchar.walk(true);
-                    mainchar.change(false);
+                    mainchar.change(true);
                     crosshair.SetActive(false);
                     aimLine.enabled = false;
                     type_2 = 1 ;
@@ -149,8 +149,8 @@ public class PlayerAttack : MonoBehaviour
         }
         if(type_2 == 2 && gun == true)
         {
-            mainchar.change(true);
             mainchar.walk(false);
+            mainchar.change(false);
             crosshair.SetActive(true);//瞄準的圖案
             aimLine.enabled = true;
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//連接到滑鼠現在位置
@@ -235,6 +235,7 @@ public class PlayerAttack : MonoBehaviour
     
     void gun_Attack()
     {
+
         GameObject bullet = Instantiate(bulletPrefab, attackPoint.position, Quaternion.identity);
         
         if (finalX < 0)
