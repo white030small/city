@@ -132,6 +132,7 @@ public class PlayerAttack : MonoBehaviour
                     type_2 = 2;
                 }
                 else{
+                    mainchar.walk(true);
                     crosshair.SetActive(false);
                     aimLine.enabled = false;
                     type_2 = 1 ;
