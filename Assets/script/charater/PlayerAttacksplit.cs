@@ -113,6 +113,7 @@ public class PlayerAttacksplit : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
+            mainchar.change(true);
             knife = true;
             gun = false;
             KniUI.SetActive(true);
@@ -121,6 +122,7 @@ public class PlayerAttacksplit : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Alpha2))
         {
+            mainchar.change(false);
             if (knife == true) // 從刀切到槍
             {
                 KniUI.SetActive(false);
@@ -136,10 +138,12 @@ public class PlayerAttacksplit : MonoBehaviour
                 bulletUI.ShowUI();
                 if(type_2 == 1){
                     type_2 = 2;
+                    mainchar.walk(false);
+                    crosshair.SetActive(true);//瞄準的圖案
+                    aimLine.enabled = true;
                 }
                 else{
                     mainchar.walk(true);
-                    mainchar.change(true);
                     crosshair.SetActive(false);
                     aimLine.enabled = false;
                     type_2 = 1 ;
@@ -149,10 +153,6 @@ public class PlayerAttacksplit : MonoBehaviour
         }
         if(type_2 == 2 && gun == true)
         {
-            mainchar.walk(false);
-            mainchar.change(false);
-            crosshair.SetActive(true);//瞄準的圖案
-            aimLine.enabled = true;
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//連接到滑鼠現在位置
             mousePos.z = 0;//z軸固定
             aimLine.SetPosition(0, attackPoint.position); // 起點：槍口

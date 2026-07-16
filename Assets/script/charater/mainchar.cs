@@ -187,7 +187,7 @@ public class mainchar : MonoBehaviour
 
     public void change(bool ans)
     {
-        canchange = ans;
+        canchange = ans;//PlayerAttack.cs,PlayerAttacksplit.cs
     }
 
     /// 開始蹲下：之後可以加縮小碰撞箱、切換蹲下動畫
