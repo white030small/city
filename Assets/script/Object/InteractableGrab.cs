@@ -6,15 +6,15 @@ public class InteractableGrab : MonoBehaviour
     private bool isBeingDragged = false;
     private Transform playerTransform;
     private Rigidbody2D rb;
-    private Collider2D objCollider; // ª«¥ó¥»¨­ªº¸I¼²¾¹
-    private mainchar playerScript; // Àx¦s¥D¨¤¸}¥»ªº°Ñ¦Ò
+    private Collider2D objCollider; // ï¿½ï¿½ï¿½ó¥»¨ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½
+    private mainchar playerScript; // ï¿½xï¿½sï¿½Dï¿½ï¿½ï¿½}ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¦ï¿½
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         objCollider = GetComponent<Collider2D>();
 
-        // ªì©l¤Æ´NÂê¦º X ¶b»P±ÛÂà¡A½T«O¥­±`±À¤£°Ê¡A¦ı¯à¨ü­«¤O±¼¸¨
+        // ï¿½ï¿½lï¿½Æ´Nï¿½ê¦º X ï¿½bï¿½Pï¿½ï¿½ï¿½ï¿½Aï¿½Tï¿½Oï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½Ê¡Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½
         rb.bodyType = RigidbodyType2D.Dynamic;
         LockPosition(true);
     }
@@ -26,12 +26,12 @@ public class InteractableGrab : MonoBehaviour
             StopDragging();
         }
 
-        // ¥u¦³«ö E ¤~·|¤Á´«ª¬ºA
+        // ï¿½uï¿½ï¿½ï¿½ï¿½ E ï¿½~ï¿½|ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½A
         if (isPlayerNearby && Input.GetKeyDown(KeyCode.E))
         {
             if (!isBeingDragged)
             {
-                // ¡iÃöÁäÀË¬d¡j¥u¦³¥D¨¤¦b¦a¤W®É¡A¤~¯à¶}©l·h¹B
+                // ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½Ë¬dï¿½jï¿½uï¿½ï¿½ï¿½Dï¿½ï¿½ï¿½bï¿½aï¿½Wï¿½É¡Aï¿½~ï¿½ï¿½}ï¿½lï¿½hï¿½B
                 if (playerScript != null && playerScript.isGrounded)
                 {
                     StartDragging();
@@ -48,13 +48,13 @@ public class InteractableGrab : MonoBehaviour
     {
         isBeingDragged = true;
         transform.SetParent(playerTransform);
-        // §i¶D¥D¨¤¡G§A¶}©l·hªF¦è¤F
+        // ï¿½iï¿½Dï¿½Dï¿½ï¿½ï¿½Gï¿½Aï¿½}ï¿½lï¿½hï¿½Fï¿½ï¿½F
         if (playerScript != null) playerScript.isDraggingObject = true;
-        // §ì¨ú®É§ï¬° Kinematic Á×§Kª«²z§İ°Ê
+        // ï¿½ï¿½ï¿½ï¿½É§ï¬° Kinematic ï¿½×§Kï¿½ï¿½ï¿½zï¿½İ°ï¿½
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.linearVelocity = Vector2.zero;
 
-        // §ì¨ú®É¼È®É©¿²¤»Pª±®aªº¸I¼²¡A¨¾¤î¸õÅD®É¤¬¬Û±ÀÀ½
+        // ï¿½ï¿½ï¿½ï¿½É¼È®É©ï¿½ï¿½ï¿½ï¿½Pï¿½ï¿½ï¿½aï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Dï¿½É¤ï¿½ï¿½Û±ï¿½ï¿½ï¿½
         Collider2D playerCollider = playerTransform.GetComponent<Collider2D>();
         if (playerCollider != null)
         {
@@ -65,9 +65,9 @@ public class InteractableGrab : MonoBehaviour
     void StopDragging()
     {
         isBeingDragged = false;
-        // §i¶D¥D¨¤¡G§A©ñ¤â¤F
+        // ï¿½iï¿½Dï¿½Dï¿½ï¿½ï¿½Gï¿½Aï¿½ï¿½ï¿½F
         if (playerScript != null) playerScript.isDraggingObject = false;
-        // «ì´_¸I¼²°»´ú
+        // ï¿½ï¿½_ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (playerTransform != null)
         {
             Collider2D playerCollider = playerTransform.GetComponent<Collider2D>();
@@ -86,7 +86,7 @@ public class InteractableGrab : MonoBehaviour
     {
         if (locked)
         {
-            // Âê©w X »P ±ÛÂà¡A«O¯d Y ¶bÅı¥¦¯à¤U¼Y
+            // ï¿½ï¿½w X ï¿½P ï¿½ï¿½ï¿½ï¿½Aï¿½Oï¿½d Y ï¿½bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Uï¿½Y
             rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         }
         else
@@ -100,8 +100,14 @@ public class InteractableGrab : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = true;
-            playerTransform = other.transform; // ¶È°O¿ı¦ì¸m¡A¤£°õ¦æ SetParent
+            playerTransform = other.transform;
             playerScript = other.GetComponent<mainchar>();
+            
+            // éˆé«”èº«ä¸Šæ²’æœ‰ maincharï¼Œå» main char æ‰¾
+            if (playerScript == null)
+            {
+                playerScript = FindFirstObjectByType<mainchar>();
+            }
         }
     }
 
