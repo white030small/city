@@ -82,7 +82,6 @@ public class mainchar : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-
     void Update()
     {
         // ---- 衝刺冷卻倒數 ----
@@ -132,7 +131,6 @@ public class mainchar : MonoBehaviour
             spriteRenderer.flipX = false;
         }
 
-
         // ---- 蹲下：按住 S 鍵或下方向鍵 ----
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
@@ -167,10 +165,12 @@ public class mainchar : MonoBehaviour
         // ---- 根據目前世界執行移動 ---- 
         if (world == 1)
         {
+            rbSpirit.bodyType = RigidbodyType2D.Dynamic;
             ApplyHorizontalMovement(rbSpirit);   // 靈界：只移動靈體
         }
         else
         {
+            rbSpirit.bodyType = RigidbodyType2D.Kinematic;
             ApplyHorizontalMovement(rbReality);  // 現實：移動現實角色
             spritgoreality();                    // 同時同步靈體位置
         }
@@ -344,6 +344,8 @@ public class mainchar : MonoBehaviour
         if (world == 0)
         {
             world = 1;
+            rbReality.linearVelocity = new Vector2(0, rbReality.linearVelocity.y);
+            animator.SetBool("change" , true);
             PlayerAttack.now_world(1);
             PlayerAttacksplit.now_world(1);
             camermover.SwitchTarget(true);   // 攝影機跟隨靈體
@@ -351,6 +353,7 @@ public class mainchar : MonoBehaviour
         else
         {
             world = 0;
+            animator.SetBool("change" , false);
             PlayerAttack.now_world(0);
             PlayerAttacksplit.now_world(0);
             camermover.SwitchTarget(false);  // 攝影機跟隨現實角色

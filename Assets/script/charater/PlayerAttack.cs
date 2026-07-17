@@ -44,7 +44,6 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
         if(world == 1) {
-            Debug.Log(world);
             return;
         }
         Debug.DrawRay(attackPoint.position, new Vector2(finalX * gun_attackRange, 0), Color.green);

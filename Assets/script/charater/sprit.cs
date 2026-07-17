@@ -91,7 +91,7 @@ public class sprit : MonoBehaviour
         int enemyLayer = LayerMask.NameToLayer("Enemy");
         Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, true);
     }
-
+    
     void OnCollisionEnter2D(Collision2D collision)//碰地板就回歸
     {
         if(collision.gameObject.CompareTag("Ground"))
