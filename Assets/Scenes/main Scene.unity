@@ -13908,15 +13908,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5397733041585172026, guid: 206f24089c2ea9d4096fc21506409b8c, type: 3}
       propertyPath: m_Name
-      value: Object (1)
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 6759756064020897101, guid: 206f24089c2ea9d4096fc21506409b8c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 6759756064020897101, guid: 206f24089c2ea9d4096fc21506409b8c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.89
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 6759756064020897101, guid: 206f24089c2ea9d4096fc21506409b8c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.55
+      value: -2.02
       objectReference: {fileID: 0}
     - target: {fileID: 6759756064020897101, guid: 206f24089c2ea9d4096fc21506409b8c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14277,7 +14281,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5397733041585172026, guid: 206f24089c2ea9d4096fc21506409b8c, type: 3}
       propertyPath: m_Name
-      value: Object
+      value: Chair
       objectReference: {fileID: 0}
     - target: {fileID: 6759756064020897101, guid: 206f24089c2ea9d4096fc21506409b8c, type: 3}
       propertyPath: m_LocalPosition.x
