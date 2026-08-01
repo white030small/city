@@ -19,6 +19,13 @@ public class sprit : MonoBehaviour
 
     private Collider2D playerCollider;    // 玩家的碰撞箱
 
+    [Header("蹲下設定")]
+    public float crouchSpeedMultiplier = 0.4f;  // 蹲下走路的速度倍率
+    private bool isCrouching = false;            // 是否正在蹲下
+    private BoxCollider2D col;
+    private Vector2 originalSize;
+    private Vector2 originalOffset;
+    
     [Header("動畫")]
     public Animator animator;
 
@@ -27,6 +34,9 @@ public class sprit : MonoBehaviour
         playerCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        col = GetComponent<BoxCollider2D>();
+        originalSize = col.size;
+        originalOffset = col.offset;
     }
 
     // Update is called once per frame
@@ -34,6 +44,32 @@ public class sprit : MonoBehaviour
     {
         moveInputX = Input.GetAxisRaw("Horizontal");  // A/D 或方向鍵的水平輸入
         bool isRunning = Input.GetKey(KeyCode.LeftShift);   // 按住 Shift = 跑步
+
+        // ---- 蹲下：按住 S 鍵或下方向鍵 ----
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            if (!isCrouching)
+                StartCrouch();
+        }
+        else
+        {
+            if (isCrouching)
+                StopCrouch();
+        }
+
+        if (isCrouching)
+        {
+            if (moveInputX != 0)
+            {
+                // 蹲著走
+                animator.speed = 1;
+            }
+            else
+            {
+                // 蹲著不動
+                animator.speed = 0;
+            }
+        }
 
         if(moveInputX == 0 )
         {
@@ -72,6 +108,30 @@ public class sprit : MonoBehaviour
             return;
         }
 
+    }
+
+    /// 開始蹲下：之後可以加縮小碰撞箱、切換蹲下動畫
+    void StartCrouch()
+    {
+        isCrouching = true;
+        col.size = new Vector2(originalSize.x, originalSize.y * 0.85f);
+        animator.SetBool("Crouch", true);
+        animator.speed = 0;
+        animator.Play("mainchar_downwalk"); 
+        // TODO: 動畫做好後加 animator.SetBool("Crouch", true);
+        // TODO: 縮小碰撞箱讓角色可以通過矮通道
+    }
+
+    /// 結束蹲下：恢復碰撞箱、切回站立動畫
+    void StopCrouch()
+    {
+        isCrouching = false;
+        animator.SetBool("Crouch", false);
+        col.size = originalSize;
+        col.offset = originalOffset;
+        animator.speed = 1;
+        // TODO: 動畫做好後加 animator.SetBool("Crouch", false);
+        // TODO: 恢復碰撞箱大小
     }
 
     /// 開始衝刺：記錄方向、開啟無敵、開始計時

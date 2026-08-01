@@ -35,7 +35,10 @@ public class mainchar : MonoBehaviour
     private float dashDirection;          // 後撤方向
 
     private Collider2D playerCollider;    // 玩家的碰撞箱
+    private BoxCollider2D col;
 
+    private Vector2 originalSize;
+    private Vector2 originalOffset;
     // ============================
     // 世界切換
     // ============================
@@ -75,11 +78,15 @@ public class mainchar : MonoBehaviour
     [Header("角色攻擊")]
     public PlayerAttack PlayerAttack;
     public PlayerAttacksplit PlayerAttacksplit;
+
     void Start()
     {
         playerCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        col = GetComponent<BoxCollider2D>();
+        originalSize = col.size;
+        originalOffset = col.offset;
     }
 
     void Update()
@@ -100,27 +107,6 @@ public class mainchar : MonoBehaviour
         isRunning = Input.GetKey(KeyCode.LeftShift);   // 按住 Shift = 跑步
         float finalX = moveInputX;
 
-        if(moveInputX == 0 && world == 0)
-        {
-            animator.SetBool("IDLE" , true);
-            animator.SetBool("walk" , false);
-            animator.SetBool("run" , false);
-        }
-
-        if(moveInputX != 0 && world == 0)
-        {
-            animator.SetBool("walk" , true);
-            animator.SetBool("IDLE" , false);
-            animator.SetBool("run" , false);
-        }
-
-        if(moveInputX != 0 && world == 0 && isRunning)
-        {
-            animator.SetBool("walk" , false);
-            animator.SetBool("IDLE" , false);
-            animator.SetBool("run" , true);
-        }
-
         if(moveInputX == -1 && world == 0)//圖片翻轉
         {
             spriteRenderer.flipX = true;
@@ -132,15 +118,52 @@ public class mainchar : MonoBehaviour
         }
 
         // ---- 蹲下：按住 S 鍵或下方向鍵 ----
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            if (!isCrouching)
-                StartCrouch();
+        if(world == 0){
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
+                if (!isCrouching)
+                    StartCrouch();
+            }
+            else
+            {
+                if (isCrouching)
+                    StopCrouch();
+            }
         }
-        else
+
+        if (isCrouching)
         {
-            if (isCrouching)
-                StopCrouch();
+            if (moveInputX != 0)
+            {
+                // 蹲著走
+                animator.speed = 1;
+            }
+            else
+            {
+                // 蹲著不動
+                animator.speed = 0;
+            }
+        }
+
+        if(!isCrouching && moveInputX == 0 && world == 0)
+        {
+            animator.SetBool("IDLE" , true);
+            animator.SetBool("walk" , false);
+            animator.SetBool("run" , false);
+        }
+
+        if(!isCrouching && moveInputX != 0 && world == 0)
+        {
+            animator.SetBool("walk" , true);
+            animator.SetBool("IDLE" , false);
+            animator.SetBool("run" , false);
+        }
+
+        if(!isCrouching && moveInputX != 0 && world == 0 && isRunning)
+        {
+            animator.SetBool("walk" , false);
+            animator.SetBool("IDLE" , false);
+            animator.SetBool("run" , true);
         }
 
         // ---- 後撤：按下右鍵，往反方向撤退 ----
@@ -194,6 +217,10 @@ public class mainchar : MonoBehaviour
     void StartCrouch()
     {
         isCrouching = true;
+        col.size = new Vector2(originalSize.x, originalSize.y * 0.85f);
+        animator.SetBool("Crouch", true);
+        animator.speed = 0;
+        animator.Play("mainchar_downwalk"); 
         // TODO: 動畫做好後加 animator.SetBool("Crouch", true);
         // TODO: 縮小碰撞箱讓角色可以通過矮通道
     }
@@ -202,6 +229,10 @@ public class mainchar : MonoBehaviour
     void StopCrouch()
     {
         isCrouching = false;
+        animator.SetBool("Crouch", false);
+        col.size = originalSize;
+        col.offset = originalOffset;
+        animator.speed = 1;
         // TODO: 動畫做好後加 animator.SetBool("Crouch", false);
         // TODO: 恢復碰撞箱大小
     }

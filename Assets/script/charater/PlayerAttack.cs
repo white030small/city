@@ -41,6 +41,14 @@ public class PlayerAttack : MonoBehaviour
     public mainchar mainchar;
     public int world = 0;
 
+    [Header("動畫")]
+    public Animator animator;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     void Update()
     {
         if(world == 1) {
@@ -159,6 +167,7 @@ public class PlayerAttack : MonoBehaviour
 
             if(Input.GetMouseButtonDown(0) && cooldownTimer <= 0 && type_2 == 2 && gun_time > 0)
             {    
+                animator.Play("mainchar_shoot");
                 // 算出從角色到滑鼠的方向
                 Vector2 direction = (mousePos - attackPoint.position).normalized;
                 
@@ -234,6 +243,7 @@ public class PlayerAttack : MonoBehaviour
     
     void gun_Attack()
     {
+        animator.Play("mainchar_shoot");
         GameObject bullet = Instantiate(bulletPrefab, attackPoint.position, Quaternion.identity);
         
         if (finalX < 0)
