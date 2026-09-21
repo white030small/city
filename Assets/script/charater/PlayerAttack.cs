@@ -24,6 +24,7 @@ public class PlayerAttack : MonoBehaviour
     public bool knife = true;
     public bool gun = false;
     public GameObject bulletPrefab;
+    public bool isAttacking = false;
 
     [Header("子彈UI")]
     public bulletUI bulletUI;
@@ -62,7 +63,7 @@ public class PlayerAttack : MonoBehaviour
         }
         // 判斷面朝方向
         moveInput = Input.GetAxisRaw("Horizontal");
-
+    
         if (moveInput > 0){
             facingRight = true;//面朝右
             finalX = moveInput;//紀錄最後面朝的方向
@@ -75,6 +76,14 @@ public class PlayerAttack : MonoBehaviour
         // 按下攻擊鍵
         if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0 && knife == true) 
         {
+
+            if(isCrouching == true){
+                animator.Play("mainchar_down_attack");
+            }
+            if(isCrouching == false){
+                animator.Play("main_attack");
+            }
+
             knife_Attack();//連接到敵人
             cooldownTimer = attackCooldown;
             Debug.Log("攻擊");
@@ -83,6 +92,14 @@ public class PlayerAttack : MonoBehaviour
         // 按下攻擊鍵
         if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0 && gun == true && type_2 == 1 && gun_time > 0) 
         {
+
+            if(isCrouching == true){
+                animator.Play("mainchar_down_shoot");
+            }
+            if(isCrouching == false){
+                animator.Play("mainchar_shoot");
+            }
+        
             gun_Attack();//連接到敵人
             gun_time -= 1;
             bulletUI.ShowAttackUI();
@@ -167,6 +184,7 @@ public class PlayerAttack : MonoBehaviour
 
             if(Input.GetMouseButtonDown(0) && cooldownTimer <= 0 && type_2 == 2 && gun_time > 0)
             {    
+
                 animator.Play("mainchar_shoot");
                 // 算出從角色到滑鼠的方向
                 Vector2 direction = (mousePos - attackPoint.position).normalized;
@@ -211,7 +229,7 @@ public class PlayerAttack : MonoBehaviour
             float direction = Mathf.Sign(enemy.transform.position.x - transform.position.x);//算出左右(左:-1，右:1)
 
             if(direction < 0 && finalX < 0){//面朝左邊
-            
+
                 if(isCrouching == true){
                     if(enemy.CompareTag("Enemy_lay") || enemy.CompareTag("Enemy_stand")){
                         enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
@@ -243,14 +261,13 @@ public class PlayerAttack : MonoBehaviour
     
     void gun_Attack()
     {
-        animator.Play("mainchar_shoot");
         GameObject bullet = Instantiate(bulletPrefab, attackPoint.position, Quaternion.identity);
-        
-        if (finalX < 0)
+        if (finalX < 0){
             bullet.GetComponent<gun>().leftorright(true);   // 往左
-        else
+        }
+        else{
             bullet.GetComponent<gun>().leftorright(false);  // 往右
-
+        }
     }
     
     // 在 Scene 視窗顯示攻擊範圍（方便調整）

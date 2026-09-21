@@ -78,6 +78,7 @@ public class mainchar : MonoBehaviour
     [Header("角色攻擊")]
     public PlayerAttack PlayerAttack;
     public PlayerAttacksplit PlayerAttacksplit;
+    public bool attacking;
 
     void Start()
     {
@@ -133,16 +134,25 @@ public class mainchar : MonoBehaviour
 
         if (isCrouching)
         {
-            if (moveInputX != 0)
+            // 取得目前正在播的動畫狀態
+            AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+
+            // 檢查是不是正在播攻擊動畫
+            bool isAttackPlaying = state.IsName("mainchar_down_attack") || 
+                                state.IsName("mainchar_down_shoot");
+            
+            // 如果不是在攻擊，才控制蹲下動畫
+            if (!isAttackPlaying)
             {
-                // 蹲著走
-                animator.speed = 1;
+                if (moveInputX != 0)
+                    // 有移動：正常播蹲下走路動畫
+                    animator.Play("mainchar_downwalk");
+                else
+                    // 沒移動：每幀重播第一幀，看起來就是定格的效果
+                    // 第二個參數 0 是 Layer，第三個 0f 代表從 0% 的位置開始播
+                    animator.Play("mainchar_downwalk", 0, 0f);
             }
-            else
-            {
-                // 蹲著不動
-                animator.speed = 0;
-            }
+            // 如果正在播攻擊動畫，什麼都不做，讓攻擊動畫自己播完
         }
 
         if(!isCrouching && moveInputX == 0 && world == 0)
@@ -212,17 +222,15 @@ public class mainchar : MonoBehaviour
     {
         canchange = ans;//PlayerAttack.cs,PlayerAttacksplit.cs
     }
+    
 
     /// 開始蹲下：之後可以加縮小碰撞箱、切換蹲下動畫
     void StartCrouch()
     {
         isCrouching = true;
-        col.size = new Vector2(originalSize.x, originalSize.y * 0.85f);
         animator.SetBool("Crouch", true);
-        animator.speed = 0;
-        animator.Play("mainchar_downwalk"); 
-        // TODO: 動畫做好後加 animator.SetBool("Crouch", true);
-        // TODO: 縮小碰撞箱讓角色可以通過矮通道
+        animator.Play("mainchar_downwalk", 0, 0f);
+        col.size = new Vector2(originalSize.x, originalSize.y * 0.85f);
     }
 
     /// 結束蹲下：恢復碰撞箱、切回站立動畫
@@ -232,7 +240,7 @@ public class mainchar : MonoBehaviour
         animator.SetBool("Crouch", false);
         col.size = originalSize;
         col.offset = originalOffset;
-        animator.speed = 1;
+        //animator.speed = 1;
         // TODO: 動畫做好後加 animator.SetBool("Crouch", false);
         // TODO: 恢復碰撞箱大小
     }
