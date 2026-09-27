@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttackO : MonoBehaviour
 {
     [Header("攻擊設定")]
     public float attackRange = 1f;      // 攻擊距離
