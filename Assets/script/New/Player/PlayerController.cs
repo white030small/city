@@ -136,6 +136,7 @@ public class PlayerController : MonoBehaviour
         {
             walkSpeed = slowSpeed;      // 套用拖移減速
             if (isCrouching) SetCrouchState(false); // 若原本蹲著則強制站起
+            if (dashComponent != null) dashComponent.isDashing = false;
         }
         else
         {

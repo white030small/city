@@ -172,6 +172,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 708609506030465917, guid: 8a189f15164b46c419e4d83c412269b5, type: 3}
+      propertyPath: m_Size.x
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 708609506030465917, guid: 8a189f15164b46c419e4d83c412269b5, type: 3}
+      propertyPath: m_Size.y
+      value: 0.94
+      objectReference: {fileID: 0}
     - target: {fileID: 7979824370399458338, guid: 8a189f15164b46c419e4d83c412269b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 17.35
@@ -1721,7 +1729,7 @@ GameObject:
   - component: {fileID: 592301370}
   - component: {fileID: 592301371}
   - component: {fileID: 592301372}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerReality
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1846,9 +1854,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a69a8b77ed4b247b9d555021c2b7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stepBackSpeed: 16
-  stepBackDuration: 0.18
-  stepBackCooldown: 0.6
+  dashSpeed: 16
+  dashDuration: 0.2
+  dashCooldown: 1
   isDashing: 0
 --- !u!114 &592301368
 MonoBehaviour:
@@ -2571,7 +2579,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1152107253}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2724,7 +2732,7 @@ GameObject:
   - component: {fileID: 1261835008}
   - component: {fileID: 1261835011}
   - component: {fileID: 1261835012}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerSpirit
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2823,7 +2831,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  playerCollider: {fileID: 0}
+  playerCollider: {fileID: 1261835011}
   standColliderSize: {x: 0.8, y: 2}
   standColliderOffset: {x: 0, y: 0}
   crouchColliderSize: {x: 0.8, y: 1}
@@ -2832,6 +2840,7 @@ MonoBehaviour:
   isGrounded: 0
   isCrouching: 0
   isRunning: 0
+  isDraggingObject: 0
 --- !u!50 &1261835009
 Rigidbody2D:
   serializedVersion: 5
@@ -2871,9 +2880,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a69a8b77ed4b247b9d555021c2b7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stepBackSpeed: 16
-  stepBackDuration: 0.18
-  stepBackCooldown: 0.6
+  dashSpeed: 16
+  dashDuration: 0.2
+  dashCooldown: 1
   isDashing: 0
 --- !u!70 &1261835011
 CapsuleCollider2D:
@@ -3129,7 +3138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1609729230}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3360,7 +3369,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1820390632}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4889,7 +4898,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4979,11 +4988,68 @@ MonoBehaviour:
   targetReality: {fileID: 592301365}
   targetSpirit: {fileID: 1261835007}
   realityFixedY: 0
-  spiritFixedY: -5
+  spiritFixedY: 0
   smoothTimeX: 0.2
   smoothTimeY: 0.35
   flipCameraInSpirit: 0
   currentWorld: 0
+--- !u!1001 &2124122987
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1682224484437441462, guid: 09d5411b72058044db0310b400a87c6e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 17.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682224484437441462, guid: 09d5411b72058044db0310b400a87c6e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682224484437441462, guid: 09d5411b72058044db0310b400a87c6e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682224484437441462, guid: 09d5411b72058044db0310b400a87c6e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682224484437441462, guid: 09d5411b72058044db0310b400a87c6e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682224484437441462, guid: 09d5411b72058044db0310b400a87c6e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682224484437441462, guid: 09d5411b72058044db0310b400a87c6e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682224484437441462, guid: 09d5411b72058044db0310b400a87c6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682224484437441462, guid: 09d5411b72058044db0310b400a87c6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682224484437441462, guid: 09d5411b72058044db0310b400a87c6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247920672653697910, guid: 09d5411b72058044db0310b400a87c6e, type: 3}
+      propertyPath: m_Name
+      value: BoxSpirit
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 09d5411b72058044db0310b400a87c6e, type: 3}
 --- !u!1001 &5409588438625777307
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5074,3 +5140,4 @@ SceneRoots:
   - {fileID: 5409588438625777307}
   - {fileID: 769399732}
   - {fileID: 253746318}
+  - {fileID: 2124122987}
