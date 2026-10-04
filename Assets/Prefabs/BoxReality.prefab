@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 697179663299108614}
   - component: {fileID: 708609506030465917}
   - component: {fileID: 9769502028471206}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: BoxReality
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.94, y: 0.94}
   m_EdgeRadius: 0.03
 --- !u!114 &9769502028471206
 MonoBehaviour:

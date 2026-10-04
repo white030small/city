@@ -292,6 +292,22 @@ public class PlayerAttack : MonoBehaviour
         if (bulletUI != null) bulletUI.ShowAttackUI(currentAmmo);
         cooldownTimer = gunAttackCooldown;
     }
+    public bool AddAmmo(int amount)
+    {
+        // 彈藥已達上限則不撿取
+        if (currentAmmo >= maxAmmo) return false;
+
+        currentAmmo = Mathf.Clamp(currentAmmo + amount, 0, maxAmmo);
+
+        // 如果目前武器是槍，且 UI 存在，即時更新轉盤 UI
+        if (bulletUI != null)
+        {
+            bulletUI.ShowChangeUI(currentAmmo);
+        }
+
+        Debug.Log($"[PlayerAttack] 成功裝填彈藥，目前彈藥: {currentAmmo}/{maxAmmo}");
+        return true;
+    }
 
     private void StartReload()
     {

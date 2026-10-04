@@ -13,17 +13,17 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
-  - Reality
-  - Spirit
+  - RealityPlayer
+  - SpiritPlayer
   - Enemy
+  - RealityInteractable
+  - SpiritInteractable
+  - Pickup
   - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
   - 
   - 
   - 
@@ -48,6 +48,24 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Environment
+    uniqueID: 1263943393
+    locked: 0
+  - name: Doors
+    uniqueID: 1825436367
+    locked: 0
+  - name: Interactables
+    uniqueID: 2102683791
+    locked: 0
+  - name: Player
+    uniqueID: 2174353011
+    locked: 0
+  - name: Foreground
+    uniqueID: 3455380145
+    locked: 0
+  - name: UI
+    uniqueID: 954357623
     locked: 0
   m_RenderingLayers:
   - Default

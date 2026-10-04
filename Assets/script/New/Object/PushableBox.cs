@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class PushableBox : MonoBehaviour
@@ -12,6 +13,7 @@ public class PushableBox : MonoBehaviour
     [Header("提示 UI (選用)")]
     [SerializeField] private GameObject interactPromptUI;
 
+
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
     private Transform playerTransform;
@@ -20,6 +22,32 @@ public class PushableBox : MonoBehaviour
     private bool isPlayerNearby = false;
     private bool isDragging = false;
     private float initialBoxToPlayerOffsetX;
+
+    public static event Action OnWorldSwitchRelease;
+
+    public static void ReleaseAllBoxes()
+    {
+        OnWorldSwitchRelease?.Invoke();
+    }
+
+    void OnEnable()
+    {
+        OnWorldSwitchRelease += ForceRelease;
+    }
+
+    void OnDisable()
+    {
+        OnWorldSwitchRelease -= ForceRelease;
+        ForceRelease();
+    }
+
+    private void ForceRelease()
+    {
+        if (isDragging)
+        {
+            StopDragging();
+        }
+    }
 
     void Awake()
     {
@@ -51,14 +79,14 @@ public class PushableBox : MonoBehaviour
 
         // 拖移中防呆
         if (isDragging)
-{
-    if (playerTransform == null || 
-        Vector2.Distance(transform.position, playerTransform.position) > grabRange * 1.5f ||
-        (playerController != null && (!playerController.isGrounded || !playerController.canMove)))
-    {
-        StopDragging();
-    }
-}
+        {
+            if (playerTransform == null || 
+                Vector2.Distance(transform.position, playerTransform.position) > grabRange * 1.5f ||
+                (playerController != null && (!playerController.isGrounded || !playerController.canMove)))
+            {
+                StopDragging();
+            }
+        }
     }
 
     void FixedUpdate()

@@ -179,6 +179,12 @@ public class PlayerController : MonoBehaviour
             {
                 rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
             }
+
+            // 若切換世界時被剝奪行動權，直接重置拖移狀態
+            if (isDraggingObject)
+            {
+                SetDraggingState(false);
+            }
         }
     }
 
