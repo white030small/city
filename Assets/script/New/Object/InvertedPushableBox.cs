@@ -120,6 +120,8 @@ public class InvertedPushableBox : MonoBehaviour
     {
         if (invertedPlayer == null || playerTransform == null) return false;
 
+        if (!invertedPlayer.enabled) return false;
+
         // 1. 限制：靈界主角必須吸附在天花板上 (空中禁止拖移)
         if (!invertedPlayer.isGrounded) return false;
 

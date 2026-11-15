@@ -4,6 +4,9 @@ public class PlayerAttack : MonoBehaviour
 {
     public enum WeaponType { Knife, Gun }
 
+    [Header("相機參照 (重要：分割畫面請指定 Camera_Top)")]
+    [SerializeField] private Camera cam;
+
     [Header("近戰 (刀) 設定")]
     [SerializeField] private float attackRange = 1f;
     [SerializeField] private float attackCooldown = 0.5f;
@@ -12,7 +15,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
 
     [Header("蹲下發射點位移 (Y 軸)")]
-    [SerializeField] private float crouchFireOffsetY = -0.5f; // 蹲下時發射點下移量 (請依角色動畫調整)
+    [SerializeField] private float crouchFireOffsetY = -0.5f;
 
     [Header("遠程 (槍) 設定")]
     [SerializeField] private GameObject bulletPrefab;
@@ -47,13 +50,14 @@ public class PlayerAttack : MonoBehaviour
     private float facingDirX = 1f;
 
     private Animator animator;
-    private Camera cam;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
         if (character == null) character = GetComponent<PlayerController>();
-        cam = Camera.main;
+
+        // 若 Inspector 未指定，才自動尋找 MainCamera
+        if (cam == null) cam = Camera.main;
     }
 
     void Start()
@@ -218,12 +222,19 @@ public class PlayerAttack : MonoBehaviour
 
     private void HandleAttackLogic()
     {
-        // 模式 2 即時更新瞄準射線起點與終點 (蹲下時起點會自動跟著降下)
+        // 模式 2 即時更新瞄準器位置與射線
         if (currentWeapon == WeaponType.Gun && gunAimMode == 2)
         {
             Vector3 mouseWorldPos = GetMouseWorldPosition();
             Vector3 currentFirePos = GetCurrentAttackPoint();
 
+            // 修復：將準星物件同步移動至滑鼠世界座標
+            if (crosshair != null)
+            {
+                crosshair.transform.position = mouseWorldPos;
+            }
+
+            // 更新射線起點與終點
             if (aimLine != null)
             {
                 aimLine.SetPosition(0, currentFirePos);
@@ -251,20 +262,18 @@ public class PlayerAttack : MonoBehaviour
 
         Vector3 currentFirePos = GetCurrentAttackPoint();
 
-        // 偵測周圍所有碰撞體
         Collider2D[] hits = Physics2D.OverlapCircleAll(currentFirePos, attackRange, enemyLayer);
         foreach (var hit in hits)
         {
-            // 只要身上有 EnemyController 腳本，不管 Tag 是什麼直接扣血！
             if (hit.TryGetComponent<EnemyController>(out var enemy))
             {
                 enemy.TakeDamage(attackDamage);
-                Debug.Log("主角砍中敵人！");
             }
         }
 
         cooldownTimer = attackCooldown;
     }
+
     private void ExecuteShoot()
     {
         if (bulletPrefab == null) return;
@@ -272,7 +281,6 @@ public class PlayerAttack : MonoBehaviour
         if (animator != null)
             animator.Play(isCrouching ? "mainchar_down_shoot" : "mainchar_shoot");
 
-        // 使用動態計算後的發射點 (蹲下時已往下偏移)
         Vector3 firePos = GetCurrentAttackPoint();
         GameObject bullet = Instantiate(bulletPrefab, firePos, Quaternion.identity);
 
@@ -283,7 +291,8 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            Vector2 dir = (GetMouseWorldPosition() - firePos).normalized;
+            Vector3 mouseWorldPos = GetMouseWorldPosition();
+            Vector2 dir = (mouseWorldPos - firePos).normalized;
             if (bullet.TryGetComponent<Gun>(out var g))
                 g.SetDirection(dir);
         }
@@ -292,20 +301,18 @@ public class PlayerAttack : MonoBehaviour
         if (bulletUI != null) bulletUI.ShowAttackUI(currentAmmo);
         cooldownTimer = gunAttackCooldown;
     }
+
     public bool AddAmmo(int amount)
     {
-        // 彈藥已達上限則不撿取
         if (currentAmmo >= maxAmmo) return false;
 
         currentAmmo = Mathf.Clamp(currentAmmo + amount, 0, maxAmmo);
 
-        // 如果目前武器是槍，且 UI 存在，即時更新轉盤 UI
         if (bulletUI != null)
         {
             bulletUI.ShowChangeUI(currentAmmo);
         }
 
-        Debug.Log($"[PlayerAttack] 成功裝填彈藥，目前彈藥: {currentAmmo}/{maxAmmo}");
         return true;
     }
 
@@ -343,12 +350,21 @@ public class PlayerAttack : MonoBehaviour
         if (character != null) character.walk(currentWeapon == WeaponType.Knife || gunAimMode == 1);
     }
 
+    /// <summary>
+    /// 精確換算滑鼠世界座標 (修復 Z 軸深度遺失與分割相機誤差)
+    /// </summary>
     private Vector3 GetMouseWorldPosition()
     {
         if (cam == null) cam = Camera.main;
-        Vector3 p = cam != null ? cam.ScreenToWorldPoint(Input.mousePosition) : Vector3.zero;
-        p.z = 0f;
-        return p;
+        if (cam == null) return Vector3.zero;
+
+        Vector3 mouseScreenPos = Input.mousePosition;
+        // 重要：傳入相機到世界 2D 平面 (Z=0) 的正確深度距離
+        mouseScreenPos.z = Mathf.Abs(cam.transform.position.z);
+
+        Vector3 worldPos = cam.ScreenToWorldPoint(mouseScreenPos);
+        worldPos.z = 0f;
+        return worldPos;
     }
 
     public void now_world(int w)
@@ -365,11 +381,9 @@ public class PlayerAttack : MonoBehaviour
     {
         if (attackPoint == null) return;
 
-        // 綠色球體：站立發射/判定範圍
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
 
-        // 藍色球體：蹲下預覽發射/判定範圍
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(attackPoint.position + new Vector3(0f, crouchFireOffsetY, 0f), attackRange);
     }

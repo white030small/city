@@ -89,7 +89,7 @@ public class PickupItem : MonoBehaviour
 
 
                 // 尚未串接血量腳本時的除錯輸出：
-                Debug.Log($"[Pickup] 拾取補包: +{amount} HP (請解除腳本內 PlayerHealth 註解以生效)");
+                Debug.Log($"[Pickup] 拾取補包: +{amount} HP (請解除腳本內 PlayerHealth 註解以生效)");   
                 return true;
 
             case ItemType.Ammo:

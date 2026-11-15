@@ -58,12 +58,14 @@ public class Gun : MonoBehaviour
         {
             bullet.linearVelocity = moveDirection * speed;
         }
+        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     void Update()
     {
         // 核心防護：即使物理引擎失效，Update 的 Transform 位移也保證子彈往前飛！
-        if (isFired)
+        if (isFired && bullet == null)
         {
             transform.position += (Vector3)(moveDirection * speed * Time.deltaTime);
         }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Cinemachine; // Unity 6 專用命名空間
 
 public class DualWorldManager : MonoBehaviour
 {
@@ -10,8 +11,13 @@ public class DualWorldManager : MonoBehaviour
     [Header("同步腳本參照")]
     [SerializeField] private PlayerSync playerSync;                  // 角色同步腳本
 
-    [Header("攝影機控制器")]
-    [SerializeField] private CameraController cameraController;
+    [Header("Cinemachine 相機設定")]
+    [SerializeField] private CinemachineCamera vcamTop;              // 現實虛擬相機
+    [SerializeField] private CinemachineCamera vcamBottom;           // 靈界虛擬相機
+
+    [Header("音效監聽器 (Audio Listener)")]
+    [SerializeField] private AudioListener topAudioListener;        // 現實相機上的 AudioListener
+    [SerializeField] private AudioListener bottomAudioListener;     // 靈界相機上的 AudioListener
 
     [Header("當前世界 (0 = 現實, 1 = 靈界)")]
     public int currentWorld = 0;
@@ -47,41 +53,45 @@ public class DualWorldManager : MonoBehaviour
 
     private void UpdateWorldState()
     {
-        if (currentWorld == 0)
-        {
-            // === 現實世界 ===
-            if (playerTop != null) playerTop.enabled = true;
-            if (playerBottom != null)
-            {
-                playerBottom.enabled = false;
-                if (rbBottom != null) rbBottom.linearVelocity = new Vector2(0f, rbBottom.linearVelocity.y);
-            }
+        bool isTop = (currentWorld == 0);
 
-            // 開啟同步：靈界角色跟隨現實角色
-            if (playerSync != null) playerSync.enabled = true;
-        }
-        else
+        // 1. 切換操作權限與殘留速度清理
+        if (playerTop != null)
         {
-            // === 靈界世界 ===
-            if (playerTop != null)
-            {
-                playerTop.enabled = false;
-                if (rbTop != null) rbTop.linearVelocity = new Vector2(0f, rbTop.linearVelocity.y);
-            }
-            if (playerBottom != null) playerBottom.enabled = true;
-
-            // 關閉同步：靈界角色獨立受玩家操作，不受上方拘束
-            if (playerSync != null) playerSync.enabled = false;
+            playerTop.enabled = isTop;
+            if (!isTop && rbTop != null)
+                rbTop.linearVelocity = new Vector2(0f, rbTop.linearVelocity.y);
         }
 
+        if (playerBottom != null)
+        {
+            playerBottom.enabled = !isTop;
+            if (isTop && rbBottom != null)
+                rbBottom.linearVelocity = new Vector2(0f, rbBottom.linearVelocity.y);
+        }
+
+        // 2. 切換同步腳本
+        if (playerSync != null)
+        {
+            playerSync.enabled = isTop;
+        }
+
+        // 3. 切換攻擊判定
         if (playerAttack != null)
         {
             playerAttack.now_world(currentWorld);
         }
 
-        if (cameraController != null)
+        // 4. 利用 Cinemachine Priority 自動過渡鏡頭
+        // 優先權高的虛擬相機會自動取得畫面控制權
+        if (vcamTop != null && vcamBottom != null)
         {
-            cameraController.SetWorld(currentWorld);
+            vcamTop.Priority = isTop ? 20 : 10;
+            vcamBottom.Priority = isTop ? 10 : 20;
         }
+
+        // 5. 動態切換 AudioListener
+        if (topAudioListener != null) topAudioListener.enabled = isTop;
+        if (bottomAudioListener != null) bottomAudioListener.enabled = !isTop;
     }
 }
