@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Unity.Cinemachine; // Unity 6 專用命名空間
 
 [RequireComponent(typeof(Collider2D))]
 public class DoorTeleport : MonoBehaviour
@@ -14,11 +15,9 @@ public class DoorTeleport : MonoBehaviour
     [SerializeField] private Transform realityPlayer;
     [SerializeField] private Transform spiritPlayer;
 
-    [Header("攝影機設定")]
-    [Tooltip("你的 Main Camera，若留空會自動抓取 Camera.main")]
-    [SerializeField] private Camera mainCamera;
-    [Tooltip("攝影機身上掛的跟隨腳本 (例如 CameraFollow)，請直接拖進來")]
-    [SerializeField] private MonoBehaviour cameraFollowScript;
+    [Header("Cinemachine 虛擬相機 (手動拖入或自動尋找)")]
+    [SerializeField] private CinemachineCamera vcamTop;
+    [SerializeField] private CinemachineCamera vcamBottom;
 
     [Header("互動按鍵與提示")]
     [SerializeField] private KeyCode interactKey = KeyCode.W;
@@ -28,15 +27,8 @@ public class DoorTeleport : MonoBehaviour
 
     void Awake()
     {
-        // 確保門是穿透的觸發器
         GetComponent<Collider2D>().isTrigger = true;
         if (interactPromptUI != null) interactPromptUI.SetActive(false);
-
-        // 自動取得相機
-        if (mainCamera == null)
-        {
-            mainCamera = Camera.main;
-        }
 
         // 自動尋找兩界角色
         if (realityPlayer == null)
@@ -63,64 +55,45 @@ public class DoorTeleport : MonoBehaviour
     {
         if (realityDestination == null || realityPlayer == null) return;
 
-        // 計算位移向量 (Delta)
-        Vector3 delta = realityDestination.position - realityPlayer.position;
-
         // 1. 傳送前若正拖著箱子，強制放手
         PushableBox.ReleaseAllBoxes();
 
-        // 2. 傳送表界主角
+        // 2. 計算兩者位移量
+        Vector3 deltaReality = realityDestination.position - realityPlayer.position;
+        Vector3 spiritTargetPos = (spiritDestination != null) 
+            ? spiritDestination.position 
+            : (spiritPlayer != null ? spiritPlayer.position + deltaReality : Vector3.zero);
+
+        Vector3 deltaSpirit = spiritPlayer != null ? (spiritTargetPos - spiritPlayer.position) : Vector3.zero;
+
+        // 3. 傳送角色並歸零速度
         realityPlayer.position = realityDestination.position;
         ResetVelocity(realityPlayer);
 
-        // 3. 傳送靈界主角
         if (spiritPlayer != null)
         {
-            if (spiritDestination != null)
-            {
-                spiritPlayer.position = spiritDestination.position;
-            }
-            else
-            {
-                spiritPlayer.position += delta;
-            }
+            spiritPlayer.position = spiritTargetPos;
             ResetVelocity(spiritPlayer);
         }
 
-        // 4. 執行攝影機 0 幀硬切瞬移
-        SnapCameraInstant();
+        // 4. 【核心修復】通知 Cinemachine 目標瞬移，消除飛躍平滑延遲
+        SnapCinemachineCameras(deltaReality, deltaSpirit);
     }
 
-    private void SnapCameraInstant()
+    private void SnapCinemachineCameras(Vector3 deltaReality, Vector3 deltaSpirit)
     {
-        if (mainCamera == null) return;
-
-        // 先把相機平滑跟隨腳本暫停，避免它在傳送幀做 Lerp/SmoothDamp 飛行運算
-        if (cameraFollowScript != null)
+        // 告知 Vcam_Top 目標產生了瞬間跳躍 (Warp)，忽略 Damping
+        if (vcamTop != null)
         {
-            cameraFollowScript.enabled = false;
+            vcamTop.OnTargetObjectWarped(realityPlayer, deltaReality);
+            vcamTop.ForceCameraPosition(realityPlayer.position, vcamTop.transform.rotation);
         }
 
-        // 直接將攝影機 X, Y 座標改到目的地，保持原本的 Z 深度 (通常為 -10)
-        mainCamera.transform.position = new Vector3(
-            realityDestination.position.x,
-            realityDestination.position.y,
-            mainCamera.transform.position.z
-        );
-
-        // 啟動協程：等待一幀後再開啟跟隨腳本
-        StartCoroutine(ReenableCameraFollow());
-    }
-
-    private IEnumerator ReenableCameraFollow()
-    {
-        // yield return null 會等待至下一影格開始
-        yield return null;
-
-        // 下一幀角色與相機都已在新位置，此時開啟就不會再有飛躍效果
-        if (cameraFollowScript != null)
+        // 告知 Vcam_Bottom 靈界相機瞬間對齊
+        if (vcamBottom != null && spiritPlayer != null)
         {
-            cameraFollowScript.enabled = true;
+            vcamBottom.OnTargetObjectWarped(spiritPlayer, deltaSpirit);
+            vcamBottom.ForceCameraPosition(spiritPlayer.position, vcamBottom.transform.rotation);
         }
     }
 

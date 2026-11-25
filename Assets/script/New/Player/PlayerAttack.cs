@@ -227,18 +227,34 @@ public class PlayerAttack : MonoBehaviour
         {
             Vector3 mouseWorldPos = GetMouseWorldPosition();
             Vector3 currentFirePos = GetCurrentAttackPoint();
+            currentFirePos.z = 0f;
+            
 
-            // 修復：將準星物件同步移動至滑鼠世界座標
-            if (crosshair != null)
+            Vector2 aimDirection = (mouseWorldPos - currentFirePos).normalized;
+            float maxAimDistance = Vector2.Distance(currentFirePos, mouseWorldPos);
+
+            // 【加入射線檢測】：如果瞄準線碰到了地面或牆壁，就停在撞擊點，不穿牆！
+            Vector3 finalTargetPos = mouseWorldPos;
+            RaycastHit2D hit = Physics2D.Raycast(currentFirePos, aimDirection, maxAimDistance, LayerMask.GetMask("Ground"));
+            
+            if (hit.collider != null)
             {
-                crosshair.transform.position = mouseWorldPos;
+                finalTargetPos = hit.point;
             }
 
-            // 更新射線起點與終點
+            // 1. 更新 Crosshair 物件位置
+            if (crosshair != null)
+            {
+                crosshair.transform.position = finalTargetPos;
+            }
+
+            // 2. 更新瞄準線
             if (aimLine != null)
             {
+                aimLine.useWorldSpace = true;
+                aimLine.positionCount = 2;
                 aimLine.SetPosition(0, currentFirePos);
-                aimLine.SetPosition(1, mouseWorldPos);
+                aimLine.SetPosition(1, finalTargetPos);
             }
         }
 
@@ -358,11 +374,12 @@ public class PlayerAttack : MonoBehaviour
         if (cam == null) cam = Camera.main;
         if (cam == null) return Vector3.zero;
 
-        Vector3 mouseScreenPos = Input.mousePosition;
-        // 重要：傳入相機到世界 2D 平面 (Z=0) 的正確深度距離
-        mouseScreenPos.z = Mathf.Abs(cam.transform.position.z);
+        Vector3 mouseViewportPos = cam.ScreenToViewportPoint(Input.mousePosition);
 
-        Vector3 worldPos = cam.ScreenToWorldPoint(mouseScreenPos);
+        mouseViewportPos.y = Mathf.Max(0.05f, mouseViewportPos.y);
+        mouseViewportPos.z = Mathf.Abs(cam.transform.position.z);
+
+        Vector3 worldPos = cam.ViewportToWorldPoint(mouseViewportPos);
         worldPos.z = 0f;
         return worldPos;
     }
